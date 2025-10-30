@@ -20,7 +20,10 @@ By completing this tutorial, you will:
 
 Before starting, ensure you have:
 
-- **Cursor IDE installed** (download from anthropic.com)
+- **Cursor IDE installed** (download from cursor.sh)
+- **Cline extension installed** in Cursor (required for MCP support)
+  - Open Cursor → Extensions (Cmd/Ctrl+Shift+X)
+  - Search for "Cline" and install
 - **A working MCP server** (we'll use the calculator from Module 03)
 - **Python 3.9+** with MCP SDK installed
 - **Basic understanding** of JSON configuration files
@@ -38,7 +41,7 @@ dir %APPDATA%\Cursor\User\globalStorage\saoudrizwan.claude-dev\settings\
 ls ~/.config/Cursor/User/globalStorage/saoudrizwan.claude-dev/settings/
 ```
 
-You should see Claude's application directory exists.
+You should see Cursor's extension storage directory exists.
 
 ## What You'll Accomplish
 
@@ -63,7 +66,7 @@ You → Cursor IDE → MCP Client → Your Server → Tool Logic
 
 **The Flow:**
 
-1. You configure which servers Claude should use
+1. You configure which servers Cursor should use (via Cline extension)
 2. Cursor IDE launches these servers on startup
 3. Claude discovers available tools from each server
 4. When you chat, Claude decides when to use tools
@@ -382,17 +385,28 @@ Now let's verify Claude can see and use your server!
 
 In Cursor IDE, **look for indicators** that your server loaded:
 
-- Some versions show MCP server status in settings
-- Check Claude's developer console (if available)
-- The most reliable way: just try using it!
+1. **Open Cline Panel**: The Cline extension adds an AI chat interface to Cursor
+   - Look for the Cline icon in the sidebar (usually on the left)
+   - Click to open the Cline chat panel
+
+2. **Check MCP Server Status** (in Cline):
+   - MCP servers configured properly will be available to Cline
+   - The Cline extension manages MCP server connections
+   - You can check Cline's settings for server status
+
+3. **Developer Console** (for debugging):
+   - Help → Toggle Developer Tools
+   - Look for MCP-related messages or errors in the console
+
+**Most reliable method**: Just try using the tools in Cline's chat!
 
 ### Test with a Simple Calculation
 
-Start a new conversation with Claude and try:
+Open the **Cline chat panel** in Cursor IDE and start a conversation:
 
-**You:** "Can you add 42 and 17 for me?"
+**You (in Cline chat):** "Can you add 42 and 17 for me?"
 
-**Expected:** Claude should use your calculator server's `add` tool and respond with the result.
+**Expected:** Claude (via Cline) should use your calculator server's `add` tool and respond with the result.
 
 ### What Claude Sees
 
