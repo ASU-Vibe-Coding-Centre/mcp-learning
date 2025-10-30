@@ -12,13 +12,13 @@ This note summarizes current MCP node options in n8n to inform the Module 02 tut
 
 ## Transports supported (varies by implementation)
 - STDIO (common for local processes)
-- Server-Sent Events (SSE)
-- HTTP Streamable (bidirectional over HTTP)
+- HTTP Streamable (bidirectional over HTTP) - **Recommended**
+- Server-Sent Events (SSE) - Legacy, being deprecated
 
 ## Common configuration options
 - Server connection
   - Base URL / Endpoint
-  - Transport selection (STDIO, SSE, HTTP streamable)
+  - Transport selection (STDIO, HTTP streamable, SSE - legacy)
   - Timeouts / retry behavior
 - Tools selection
   - Choose which tools to expose (Server) or which to call (Client)
@@ -40,7 +40,7 @@ This note summarizes current MCP node options in n8n to inform the Module 02 tut
 
 ## Limitations and caveats
 - Community node versions and capabilities can change; pin versions in examples.
-- Network/firewall settings may block HTTP/SSE; provide local-first alternatives.
+- Network/firewall settings may block HTTP transport; provide local-first alternatives.
 - Long‑running tool execution may require increased timeouts and retry logic.
 
 ## References

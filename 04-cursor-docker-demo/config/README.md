@@ -9,17 +9,24 @@ This directory contains example Cursor IDE MCP configuration files for the Quick
 
 ## HTTP Transport Configuration
 
-**Important**: The Quick Decision Maker server uses **HTTP transport with Server-Sent Events (SSE)**. This means:
+**Important**: The Quick Decision Maker server uses **Streamable HTTP transport**. This means:
 
 1. The Docker container runs the HTTP server on port 3333
-2. Cursor IDE connects to the server via HTTP URL: `http://localhost:3333/sse`
-3. The MCP server inside the container provides the tools over HTTP
+2. Cursor IDE connects to the server via HTTP URL: `http://localhost:3333/mcp`
+3. The MCP server inside the container provides the tools over Streamable HTTP
 4. You need to run the Docker container manually before connecting Cursor
 
 **Before connecting Cursor:**
 1. Start the Docker container: `docker run -d -p 3333:3333 jestercharles/mcp-quick-decision:latest`
-2. Verify the server is running: `curl http://localhost:3333/sse` (should connect)
-3. Configure Cursor to connect to `http://localhost:3333/sse`
+2. Verify the server is running: `curl http://localhost:3333/mcp` (should connect)
+3. Configure Cursor to connect to `http://localhost:3333/mcp`
+
+**Why Streamable HTTP?**
+Streamable HTTP is simpler and more efficient than SSE (Server-Sent Events):
+- Single bidirectional endpoint (`/mcp`) instead of separate GET/POST endpoints
+- Better scalability and reliability
+- Session management and connection resumption support
+- Recommended by MCP as the preferred HTTP transport method
 
 ## JSON Structure
 
@@ -30,7 +37,7 @@ The configuration uses the `mcpServers` object format:
   "mcpServers": {
     "server-name": {
       "type": "http",
-      "url": "http://localhost:3333/sse"
+      "url": "http://localhost:3333/mcp"
     }
   }
 }
@@ -41,7 +48,7 @@ The configuration uses the `mcpServers` object format:
 - **`mcpServers`**: Top-level object containing all MCP server configurations
 - **`server-name`**: Unique identifier for this server (e.g., "quick-decision-maker")
 - **`type`**: Transport type, set to `"http"` for HTTP transport
-- **`url`**: HTTP URL where the MCP server is running (e.g., "http://localhost:3333/sse")
+- **`url`**: HTTP URL where the MCP server is running (e.g., "http://localhost:3333/mcp")
 
 ## Platform Differences
 
@@ -69,13 +76,13 @@ If you need to use a different port (e.g., if 3333 is already in use):
   "mcpServers": {
     "quick-decision-maker": {
       "type": "http",
-      "url": "http://localhost:3334/sse"
+      "url": "http://localhost:3334/mcp"
     }
   }
 }
 ```
 
-**Note**: The `/sse` endpoint path remains the same; only the port changes.
+**Note**: The `/mcp` endpoint path remains the same; only the port changes.
 
 ## Configuration Placement
 
@@ -113,6 +120,6 @@ Note: File names may vary depending on your Cursor version. Check Cursor's MCP s
 - **Server not appearing in Cursor**: 
   - Check that the Docker container is running: `docker ps`
   - Check that you've restarted Cursor or reloaded MCP connections after adding the configuration
-  - Verify HTTP endpoint is accessible: `curl http://localhost:3333/sse`
+  - Verify HTTP endpoint is accessible: `curl http://localhost:3333/mcp`
 - **Connection errors**: Check container logs with `docker logs mcp-quick-decision`
 

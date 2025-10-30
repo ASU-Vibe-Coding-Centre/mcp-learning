@@ -65,7 +65,7 @@ docker run --rm --name simple-mcp simple-mcp-server:latest
 
 Notes:
 - For interactive testing with MCP Inspector, run the Python script directly on your host instead of inside Docker: `npx @modelcontextprotocol/inspector python server.py`
-- To expose HTTP instead of stdio, you would switch to an HTTP transport server implementation (out of scope for this phase).
+- To expose HTTP instead of stdio, you would switch to a Streamable HTTP transport server implementation (see Module 04 for an example).
 
 ### Connecting from Cursor IDE
 Add or update your MCP configuration to include the server:
@@ -75,7 +75,7 @@ Add or update your MCP configuration to include the server:
   "mcpServers": {
     "simple": {
       "type": "http",
-      "url": "http://localhost:3333"
+      "url": "http://localhost:3333/mcp"
     }
   }
 }

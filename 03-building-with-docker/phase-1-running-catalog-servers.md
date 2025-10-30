@@ -57,7 +57,7 @@ Add an MCP server entry in your Cursor MCP configuration, pointing to the contai
   "mcpServers": {
     "filesystem": {
       "type": "http",
-      "url": "http://localhost:3333"
+      "url": "http://localhost:3333/mcp"
     }
   }
 }
@@ -86,7 +86,7 @@ If something doesn’t work, check the following common issues:
 
 - Cursor can’t connect to server
   - Symptom: Timeouts or connection refused
-  - Fix: Verify container logs, confirm port mapping, ensure `url` in Cursor config is correct (`http://localhost:<hostPort>`)
+  - Fix: Verify container logs, confirm port mapping, ensure `url` in Cursor config is correct (`http://localhost:<hostPort>/mcp` for Streamable HTTP transport)
 
 - Image not found
   - Symptom: `pull access denied` or `manifest unknown`

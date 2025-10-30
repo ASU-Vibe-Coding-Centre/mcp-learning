@@ -38,7 +38,6 @@ from mcp.types import Resource, ResourceTemplate, TextContent, Tool
 # Define the root directory for resources
 # In this example, we'll use the parent directory of this script
 RESOURCE_ROOT = Path(__file__).parent.parent.parent
-DOCS_DIR = RESOURCE_ROOT / "resources"
 EXAMPLES_DIR = Path(__file__).parent
 
 
@@ -185,31 +184,13 @@ async def list_resources() -> list[Resource]:
     List all available resources.
     
     Resources in this server include:
-    1. Documentation files from the resources/ directory
-    2. Example Python files from the examples/ directory
-    3. Key project files (README.md, requirements.txt, etc.)
+    1. Example Python files from the examples/ directory
+    2. Key project files (README.md, requirements.txt, etc.)
     
     Returns:
         List of Resource definitions
     """
     resources = []
-    
-    # ========================================================================
-    # Documentation Resources
-    # ========================================================================
-    
-    if DOCS_DIR.exists():
-        # Find all markdown files in resources/
-        md_files = list_files_in_directory(DOCS_DIR, "*.md")
-        for md_file in md_files:
-            if is_safe_path(RESOURCE_ROOT, md_file):
-                relative_path = md_file.relative_to(RESOURCE_ROOT)
-                resources.append(Resource(
-                    uri=f"file:///{relative_path.as_posix()}",
-                    name=f"Documentation: {md_file.stem}",
-                    description=f"Documentation file: {relative_path}",
-                    mimeType="text/markdown"
-                ))
     
     # ========================================================================
     # Example Code Resources
@@ -275,16 +256,6 @@ async def list_resource_templates() -> list[ResourceTemplate]:
                 "Example: file:///03-basic-mcp-server/README.md"
             ),
             mimeType="application/octet-stream"  # Generic, actual type determined at read time
-        ),
-        ResourceTemplate(
-            uriTemplate="file:///resources/{category}/{filename}",
-            name="Resource Files",
-            description=(
-                "Access files in the resources directory. "
-                "Categories: cheatsheets, prompts, references. "
-                "Example: file:///resources/cheatsheets/mcp-cheatsheet.md"
-            ),
-            mimeType="text/plain"
         ),
         ResourceTemplate(
             uriTemplate="file:///{module}/README.md",

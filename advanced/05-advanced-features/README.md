@@ -726,12 +726,14 @@ Throughout your exercises, you can ask questions like:
 
 The example servers demonstrate complete implementations with detailed comments explaining design decisions.
 
-### Check the Cheat Sheet
+### Quick Reference
 
-See `resources/cheatsheets/mcp-cheatsheet.md` for quick reference on:
+For quick reference on:
 - Resource URI patterns
 - Prompt message structure
 - Streaming notification format
+
+See the examples in this module for complete working implementations.
 - Capability declaration syntax
 
 ## Key Takeaways

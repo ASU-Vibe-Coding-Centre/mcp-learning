@@ -8,17 +8,20 @@ Tools:
 - make_decision: Accepts a list of options and randomly selects one (core Quick Decision Maker functionality)
 - random_number: Generates a random number within a specified range (useful for numeric decisions)
 
-This server uses the MCP Python SDK with HTTP transport, making it suitable
-for running inside a Docker container and connecting to Cursor IDE.
+This server uses the MCP Python SDK with Streamable HTTP transport via FastAPI,
+making it suitable for running inside a Docker container and connecting to Cursor IDE.
+FastAPI provides a cleaner, simpler implementation compared to manual ASGI code.
+Streamable HTTP provides a simpler, more efficient bidirectional communication over HTTP.
 """
 
 import asyncio
 import os
 import random
-from typing import Any
+from contextlib import asynccontextmanager
 
+from fastapi import FastAPI
 from mcp.server import Server
-from mcp.server.sse import SseServerTransport
+from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
 from mcp.types import Tool, TextContent
 import uvicorn
 
@@ -108,8 +111,8 @@ async def call_tool(name: str, arguments: dict) -> list[TextContent]:
     
     The flow:
     1. User types a prompt in Cursor (e.g., "Flip a coin")
-    2. Cursor's AI sees the flip_coin tool is available
-    3. Cursor calls this function with name="flip_coin" and arguments={}
+    2. Cursor's AI sees the make_decision tool is available
+    3. Cursor calls this function with name="make_decision" and arguments={...}
     4. We execute the tool logic and return results
     5. Cursor's AI receives the results and can respond to the user
     
@@ -202,64 +205,78 @@ async def call_tool(name: str, arguments: dict) -> list[TextContent]:
     raise ValueError(f"Unknown tool: {name}")
 
 
-def create_asgi_app():
-    """Create the ASGI application for HTTP transport with SSE."""
-    # Create the transport with SSE (Server-Sent Events) for HTTP
-    # The transport handles requests to the /sse endpoint
-    transport = SseServerTransport("/sse")
+# Create the Streamable HTTP session manager
+# This is created at module level so it can be used in lifespan and request handling
+session_manager = StreamableHTTPSessionManager(app)
+
+
+@asynccontextmanager
+async def lifespan(fastapi_app: FastAPI):
+    """Manage MCP session manager lifecycle with FastAPI.
     
-    # Create an ASGI application that routes requests to the transport
-    async def asgi_app(scope, receive, send):
-        """ASGI application handler for HTTP transport."""
+    This lifespan context manager handles startup and shutdown of the MCP session manager.
+    FastAPI calls this automatically when the application starts and stops.
+    
+    Startup: Starts the session manager background tasks
+    Shutdown: Automatically cleans up when the app stops
+    """
+    # Startup: start the session manager
+    async with session_manager.run():
+        yield  # App runs here
+    # Shutdown: cleanup happens automatically
+
+
+# Create FastAPI app with lifespan events
+# FastAPI handles HTTP routing, error handling, and lifespan management automatically
+fastapi_app = FastAPI(lifespan=lifespan)
+
+
+# Create ASGI app wrapper for MCP session manager
+# This wrapper allows us to mount the MCP session manager at /mcp
+class MCPASGIApp:
+    """ASGI application wrapper for the MCP session manager.
+    
+    This class wraps the session manager's handle_request method as an ASGI application
+    so it can be mounted in FastAPI. It delegates all HTTP requests to the session manager.
+    """
+    def __init__(self, session_manager):
+        self.session_manager = session_manager
+    
+    async def __call__(self, scope, receive, send):
+        """Handle ASGI requests by delegating to the session manager."""
         if scope["type"] == "http":
-            # Check if the request path matches the SSE endpoint
-            path = scope.get("path", "")
-            if path == "/sse" or path.startswith("/sse"):
-                # Route requests to the SSE transport
-                # The transport handles the MCP protocol communication
-                await transport.handle_request(scope, receive, send, app)
-            else:
-                # Return 404 for other paths
-                await send({
-                    "type": "http.response.start",
-                    "status": 404,
-                    "headers": [[b"content-type", b"text/plain"]],
-                })
-                await send({
-                    "type": "http.response.body",
-                    "body": b"Not Found",
-                })
-        else:
-            # For non-HTTP requests, return 404
-            await send({
-                "type": "http.response.start",
-                "status": 404,
-                "headers": [[b"content-type", b"text/plain"]],
-            })
-            await send({
-                "type": "http.response.body",
-                "body": b"Not Found",
-            })
-    
-    return asgi_app
+            await self.session_manager.handle_request(scope, receive, send)
+
+
+# Mount the MCP ASGI app at /mcp
+# FastAPI can mount other ASGI applications as sub-applications
+# This routes all requests to /mcp/* to the MCP session manager
+fastapi_app.mount("/mcp", MCPASGIApp(session_manager))
 
 
 async def main() -> None:
-    """Run the MCP server over HTTP transport.
+    """Run the MCP server using FastAPI and uvicorn.
     
-    This is the entry point that starts the MCP server. It uses HTTP transport
-    with Server-Sent Events (SSE), which means the server communicates over HTTP.
+    This is the entry point that starts the MCP server. It uses FastAPI with Streamable HTTP transport,
+    which provides a simpler, more efficient bidirectional communication over HTTP.
     
     How it works:
     1. The server starts an HTTP server (uvicorn) on a specified port (default: 3333)
-    2. Cursor IDE connects via HTTP URL (e.g., http://localhost:3333/sse)
-    3. The Server instance (app) handles routing incoming requests to our handlers
-    4. The server runs until it receives a shutdown signal
+    2. Cursor IDE connects via HTTP URL (e.g., http://localhost:3333/mcp)
+    3. Streamable HTTP uses a single bidirectional endpoint for both requests and responses
+    4. The Server instance (app) handles routing incoming requests to our handlers
+    5. The server runs until it receives a shutdown signal
     
     When running in Docker:
     - Docker exposes a port (e.g., 3333) and maps it to the host
-    - Cursor IDE connects to http://localhost:3333/sse
-    - This creates a communication bridge: Cursor <-> HTTP <-> Docker Container <-> MCP Server
+    - Cursor IDE connects to http://localhost:3333/mcp
+    - This creates a communication bridge: Cursor <-> Streamable HTTP <-> Docker Container <-> MCP Server
+    
+    Advantages of FastAPI over manual ASGI:
+    - Cleaner code (~30 lines vs ~60 lines)
+    - Built-in lifespan management
+    - Automatic routing and error handling
+    - Easy to extend with additional routes or middleware
     
     The server will continue running until:
     - The process receives SIGTERM/SIGINT
@@ -269,12 +286,9 @@ async def main() -> None:
     port = int(os.getenv("PORT", "3333"))
     host = os.getenv("HOST", "0.0.0.0")
     
-    # Create the ASGI application
-    asgi_app = create_asgi_app()
-    
-    # Run the server with uvicorn
+    # FastAPI is already an ASGI app, so we can use it directly with uvicorn
     config = uvicorn.Config(
-        app=asgi_app,
+        app=fastapi_app,
         host=host,
         port=port,
         log_level="info",
@@ -287,4 +301,3 @@ if __name__ == "__main__":
     # Run the async main function using asyncio
     # This starts the HTTP server and keeps it running
     asyncio.run(main())
-

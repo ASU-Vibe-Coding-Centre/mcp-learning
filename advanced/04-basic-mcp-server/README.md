@@ -1002,13 +1002,15 @@ When stuck, refer to the example servers in `examples/`. They demonstrate:
 - Common error handling approaches
 - Comprehensive comments explaining each section
 
-### Check the Cheat Sheet
+### Quick Reference
 
-See `resources/cheatsheets/mcp-cheatsheet.md` for quick reference on:
+For quick reference on:
 - Tool schema syntax
 - Common type definitions
 - Handler patterns
 - Error handling templates
+
+See the examples in this module for complete working implementations.
 
 ## Key Takeaways
 

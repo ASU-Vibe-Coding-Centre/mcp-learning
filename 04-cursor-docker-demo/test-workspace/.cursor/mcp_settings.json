@@ -2,7 +2,7 @@
   "mcpServers": {
     "quick-decision-maker": {
       "type": "http",
-      "url": "http://localhost:3333/sse"
+      "url": "http://localhost:3333/mcp"
     }
   }
 }

@@ -1228,13 +1228,15 @@ Throughout your exercises, you can ask questions like:
 
 The example servers demonstrate complete, production-ready implementations with proper error handling, logging, and security.
 
-### Check the Cheat Sheet
+### Quick Reference
 
-See `resources/cheatsheets/mcp-cheatsheet.md` for quick reference on:
+For quick reference on:
 - Cursor IDE configuration
 - MCP Inspector commands
 - Common integration patterns
 - Debugging techniques
+
+See the examples in this module for complete working implementations.
 
 ## Key Takeaways
 

@@ -83,12 +83,6 @@ async def list_resource_templates() -> list[ResourceTemplate]:
             mimeType="text/plain"
         ),
         ResourceTemplate(
-            uriTemplate="file:///resources/{category}/{filename}",
-            name="Resource Files by Category",
-            description="Access resource files by category",
-            mimeType="text/markdown"
-        ),
-        ResourceTemplate(
             uriTemplate="file:///{module}/README.md",
             name="Module README Files",
             description="Access README for any module",

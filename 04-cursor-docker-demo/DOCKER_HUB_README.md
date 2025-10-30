@@ -35,7 +35,7 @@ docker logs mcp-quick-decision
   "mcpServers": {
     "quick-decision-maker": {
       "type": "http",
-      "url": "http://localhost:3333/sse"
+      "url": "http://localhost:3333/mcp"
     }
   }
 }
@@ -57,8 +57,9 @@ docker logs mcp-quick-decision
 ## Image Details
 
 - **Base Image**: Python 3.11-slim
-- **Size**: ~181MB
-- **Transport**: HTTP with Server-Sent Events (SSE)
+- **Size**: ~197MB
+- **Framework**: FastAPI (cleaner, simpler HTTP transport)
+- **Transport**: Streamable HTTP (single bidirectional endpoint)
 - **Platform**: Linux/amd64
 
 ## Documentation

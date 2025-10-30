@@ -51,7 +51,7 @@ Create or edit: `%USERPROFILE%/.cursor/mcp.json`
   "mcpServers": {
     "quick-decision-maker": {
       "type": "http",
-      "url": "http://localhost:3333/sse"
+      "url": "http://localhost:3333/mcp"
     }
   }
 }
@@ -97,7 +97,7 @@ Generate a random number between 50 and 200.
 
 **Cursor can't connect?**
 - Verify the Docker container is running: `docker ps`
-- Check port 3333 is available: `curl http://localhost:3333/sse`
+- Check port 3333 is available: `curl http://localhost:3333/mcp`
 - Verify configuration file location and name (`mcp.json`)
 - Check JSON syntax is valid (no trailing commas)
 - Restart Cursor IDE completely

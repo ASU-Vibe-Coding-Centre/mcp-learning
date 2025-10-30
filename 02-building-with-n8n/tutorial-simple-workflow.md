@@ -38,13 +38,13 @@ At the end, you’ll have a working bidirectional pattern: n8n can both provide 
 
 ### A2. Add MCP Server Trigger node
 - Add node: search for "MCP Server Trigger" and place it as the first node.
-- Transport: use the default recommended transport for your n8n version (SSE or HTTP Streamable).
+- Transport: use the default recommended transport for your n8n version (prefer HTTP Streamable).
 - Tools: start with three tools: `greet`, `add`, `timestamp`.
 
 ### A2.1 MCP Server Trigger configuration details
 - Transport
-  - Start with the default recommended (often SSE or HTTP Streamable).
-  - If running behind proxies/firewalls, HTTP Streamable is often more reliable than SSE.
+  - Start with HTTP Streamable (recommended).
+  - HTTP Streamable is more reliable than SSE, especially behind proxies/firewalls.
 - Tools
   - Define tool names (`greet`, `add`, `timestamp`) and attach input schemas.
   - Map each tool to the correct downstream node/branch.
@@ -210,7 +210,7 @@ At the end, you’ll have a working bidirectional pattern: n8n can both provide 
 ### B4.1 MCP Client configuration details
 - Connection
   - Point to Workflow A’s MCP Server Trigger (same host/transport you enabled there).
-  - Transport: match Server’s transport (SSE or HTTP Streamable). If unsure, use the same one you tested in A5.
+  - Transport: match Server's transport (prefer HTTP Streamable). If unsure, use the same one you tested in A5.
 - Authentication (if required)
   - Local/demo: none
   - Protected: bearer token or custom headers; store in n8n credentials/env vars
@@ -338,16 +338,16 @@ You can have Cursor act as an MCP client to your n8n server.
 
 1) In n8n
 - Ensure Workflow A (MCP Server Trigger) is enabled
-- Note the server endpoint/transport (SSE or HTTP Streamable)
+- Note the server endpoint/transport (prefer HTTP Streamable, endpoint `/mcp`)
 - If protected, prepare a bearer token or custom header
 
 2) In Cursor MCP settings (JSON)
-Add an entry pointing to your n8n endpoint. Example (SSE):
+Add an entry pointing to your n8n endpoint. Example (Streamable HTTP):
 ```json
 {
   "mcpServers": {
     "n8n-mcp": {
-      "transport": "sse",
+      "type": "http",
       "url": "https://your-n8n.example.com/mcp",
       "headers": {
         "Authorization": "Bearer YOUR_TOKEN_IF_USED"
@@ -357,7 +357,8 @@ Add an entry pointing to your n8n endpoint. Example (SSE):
 }
 ```
 Notes:
-- If SSE is blocked by a proxy/firewall, try HTTP streamable if your Cursor build supports it
+- Streamable HTTP is the recommended transport (uses `/mcp` endpoint)
+- If your n8n setup uses SSE, set transport accordingly (legacy)
 - Keep secrets in env/secure storage; avoid hardcoding in shared configs
 
 3) Test from Cursor
@@ -368,7 +369,7 @@ Notes:
 ## Troubleshooting: Connection issues between workflows
 - Tools not visible in client
   - Cause: Workflow A not enabled or transport mismatch
-  - Fix: Enable Workflow A; ensure both sides use the same transport (SSE or HTTP streamable)
+  - Fix: Enable Workflow A; ensure both sides use the same transport (prefer HTTP Streamable)
 - 4xx/5xx from MCP Client node
   - Cause: wrong URL/headers or auth missing
   - Fix: verify endpoint, add bearer/custom headers, and test locally first
@@ -376,8 +377,8 @@ Notes:
   - Cause: long-running steps or network latency
   - Fix: increase timeout/retries in MCP Client; optimize tool logic
 - CORS/proxy interference
-  - Cause: proxy drops SSE or modifies headers
-  - Fix: prefer HTTP streamable or adjust proxy to allow SSE and required headers
+  - Cause: proxy drops connections or modifies headers
+  - Fix: use HTTP Streamable or adjust proxy settings
 - Inconsistent payloads
   - Cause: schema mismatch (e.g., numbers as strings)
   - Fix: coerce types in Set/Function nodes; validate against schemas in A3.1
@@ -390,7 +391,7 @@ Notes:
   - Mistake: HTTP Response before MCP Client/formatting nodes
   - Fix: ensure HTTP Response is the final node on each path
 - Mixed transports
-  - Mistake: Server Trigger uses SSE but Client expects HTTP streamable (or vice versa)
+  - Mistake: Server and Client transports don't match (e.g., SSE vs HTTP Streamable)
   - Fix: align transports; test the same URL manually
 - Credentials not loaded
   - Mistake: missing env/credential reference in headers
@@ -429,4 +430,4 @@ Notes:
 - Monitor
   - Use the Execution List to confirm successful runs and inspect any failures
 - Adjust
-  - If SSE is blocked, switch to HTTP streamable (if available) or test from local n8n
+  - Use HTTP Streamable (recommended) or test from local n8n

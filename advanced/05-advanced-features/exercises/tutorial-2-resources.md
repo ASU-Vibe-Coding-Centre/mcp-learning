@@ -76,7 +76,7 @@ app = Server("documentation-resource-server")
 
 # Define project root
 PROJECT_ROOT = Path(__file__).parent.parent.parent
-DOCS_DIR = PROJECT_ROOT / "resources"
+DOCS_DIR = PROJECT_ROOT / "advanced" / "05-advanced-features" / "examples"
 
 # We'll add handlers here
 
@@ -249,16 +249,6 @@ async def list_resource_templates() -> list[ResourceTemplate]:
             mimeType="text/plain"  # Generic, actual type determined at read time
         ),
         ResourceTemplate(
-            uriTemplate="file:///resources/{category}/{filename}",
-            name="Resource Files by Category",
-            description=(
-                "Access resource files by category. "
-                "Categories: cheatsheets, prompts, references. "
-                "Example: file:///resources/cheatsheets/mcp-cheatsheet.md"
-            ),
-            mimeType="text/markdown"
-        ),
-        ResourceTemplate(
             uriTemplate="file:///{module}/README.md",
             name="Module README Files",
             description=(
@@ -371,7 +361,7 @@ Use read_resource() to read any file by its URI.
 
 {chr(10).join(f"  - {cat}" for cat in sorted(categories))}
 
-Use resource template: file:///resources/{{category}}/{{filename}}
+Use resource template: file:///{path} to access files by their path
 """
         )]
     

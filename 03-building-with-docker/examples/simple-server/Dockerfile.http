@@ -1,0 +1,21 @@
+## Base image: small Python runtime suitable for production
+FROM python:3.11-slim
+
+## Set working directory inside the container
+WORKDIR /app
+
+## Install Python dependencies
+##
+## Using --no-cache-dir keeps the image smaller by not caching wheels.
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+## Copy application code
+COPY server_http.py ./
+
+## Expose port 3333 for Streamable HTTP transport
+EXPOSE 3333
+
+## Default command: run the MCP server via Python
+CMD ["python", "server_http.py"]
+

@@ -71,7 +71,7 @@ Cursor IDE ←→ Docker Container ←→ MCP Server
 
 1. **MCP Server**: A program that provides tools to AI assistants
 2. **Docker Container**: Packages the server for easy deployment
-3. **HTTP Transport**: Communication over HTTP with Server-Sent Events (SSE) on port 3333
+3. **HTTP Transport**: Communication over Streamable HTTP on port 3333
 4. **Tool Discovery**: Cursor automatically discovers available tools when connected
 
 ### Visual Aids (Optional)
@@ -152,7 +152,7 @@ If you prefer to build from source:
 - No need to install Python or dependencies on your machine
 - The server runs in isolation inside the container
 - We expose port 3333 and map it to the host for HTTP communication
-- The server uses HTTP transport with SSE (Server-Sent Events)
+- The server uses Streamable HTTP transport
 
 **Transition**: "Now that we have the server ready, let's connect it to Cursor IDE..."
 
@@ -197,7 +197,7 @@ Open or create `~/.cursor/mcp.json` (macOS/Linux) or `%USERPROFILE%/.cursor/mcp.
   "mcpServers": {
     "quick-decision-maker": {
       "type": "http",
-      "url": "http://localhost:3333/sse"
+      "url": "http://localhost:3333/mcp"
     }
   }
 }
@@ -242,8 +242,8 @@ docker run -d -p 3333:3333 --name mcp-quick-decision jestercharles/mcp-quick-dec
 
 - **`type`**: Transport type, set to `"http"` for HTTP transport
 - **`url`**: HTTP URL where the MCP server is running
-  - Format: `http://localhost:3333/sse`
-  - The `/sse` endpoint is the Server-Sent Events endpoint for MCP communication
+  - Format: `http://localhost:3333/mcp`
+  - The `/mcp` endpoint is the Streamable HTTP endpoint for MCP communication
   - Port `3333` must match the port where Docker container is exposed
 
 ### Troubleshooting: Configuration Issues
@@ -265,7 +265,7 @@ docker run -d -p 3333:3333 --name mcp-quick-decision jestercharles/mcp-quick-dec
 **Issue**: Port already in use
 - **Solution**: Check if another container is using port 3333: `docker ps`
 - **Solution**: Use a different port: `docker run -d -p 3334:3333 --name mcp-quick-decision jestercharles/mcp-quick-decision:latest`
-- **Solution**: Update Cursor config to use the new port: `"url": "http://localhost:3334/sse"`
+- **Solution**: Update Cursor config to use the new port: `"url": "http://localhost:3334/mcp"`
 
 **Transition**: "Great! Now that Cursor is connected, let's test the server with some example prompts..."
 
@@ -400,7 +400,7 @@ Encourage questions about:
 **Key Concepts:**
 - **MCP Server**: Provides tools to AI assistants
 - **Docker Packaging**: Makes servers easy to deploy
-- **HTTP Transport**: Communication over HTTP on port 3333 with SSE
+- **HTTP Transport**: Communication over Streamable HTTP on port 3333
 - **Tool Discovery**: Cursor automatically finds available tools
 
 **Architecture Recap:**
@@ -514,7 +514,7 @@ docker run -d -p 3333:3333 --name mcp-quick-decision jestercharles/mcp-quick-dec
 
 **Solutions:**
 1. Check if container is running: `docker ps`
-2. Verify HTTP endpoint is accessible: `curl http://localhost:3333/sse`
+2. Verify HTTP endpoint is accessible: `curl http://localhost:3333/mcp`
 3. Check container logs: `docker logs mcp-quick-decision`
 4. Verify tool parameters match the schema
 5. Restart the container if needed
@@ -530,7 +530,7 @@ Verify the container is running and the port is mapped correctly:
 docker ps
 
 # Check if port 3333 is listening
-curl http://localhost:3333/sse
+curl http://localhost:3333/mcp
 
 # Restart the container if needed
 docker stop mcp-quick-decision
