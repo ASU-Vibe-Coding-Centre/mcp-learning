@@ -1,0 +1,39 @@
+# Python exclusions
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.coverage
+
+# Virtual environment exclusions
+venv/
+env/
+ENV/
+.venv/
+
+# Docker exclusions
+*.log
+docker-compose.override.yml
+
+# IDE exclusions
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# System exclusions
+.DS_Store
+Thumbs.db
+
+# Project-specific exclusions
+# Internal documentation - not for public repository
+tasks/
+rules/
+
+# Secrets and API keys
+.env
+.env.*
+
