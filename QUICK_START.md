@@ -1,6 +1,28 @@
 # Quick Start Guide
 
-Get your first MCP server running in under 10 minutes! This guide will take you from zero to a working MCP server.
+Get your first MCP server connected in under 10 minutes! This guide will take you from zero to a working MCP connection.
+
+> **Note:** This repository has been restructured with simplified beginner-friendly modules. For the most up-to-date quickstart, see **[Module 01: Introduction & QuickStart](01-introduction-quickstart/)**. This guide provides Docker-based quickstart alternatives.
+
+## Repository Structure
+
+This repository now has two learning paths:
+
+### Simplified Learning Path (Recommended for Beginners)
+- **Module 01**: Introduction & QuickStart (10-minute connection guide)
+- **Module 02**: Building with n8n (workflow automation)
+- **Module 03**: Building with Docker (custom servers)
+
+**Total time:** 4-6 hours | [See Learning Path →](LEARNING_PATH.md)
+
+### Advanced Learning Path (For Deep Dives)
+- **8 comprehensive modules** covering protocol details, advanced features, security, and debugging
+
+**Total time:** 16-23 hours | [See Advanced Content →](advanced/)
+
+---
+
+Get your first MCP server running in under 10 minutes using existing server options.
 
 ## Prerequisites Check
 
@@ -176,51 +198,47 @@ deactivate
 
 You've successfully run your first MCP server! Here's what to do next:
 
-### Immediate Next Steps
+### Recommended Next Steps
 
-1. **Try Pre-Built Servers First (Fastest)**
-   - Read [Module 03: Docker MCP Ecosystem](03-docker-mcp-ecosystem/README.md)
-   - Use Docker MCP Catalog servers immediately
-   - See real MCP servers in action
+**New Beginner-Friendly Path:**
+1. **[Module 01: Introduction & QuickStart](01-introduction-quickstart/)** - 10-minute connection guide using free servers
+2. **[Module 02: Building with n8n](02-building-with-n8n/)** - Build workflow-based MCP servers (45 min)
+3. **[Module 03: Building with Docker](03-building-with-docker/)** - Build custom Python servers (3-4 hours)
 
-2. **Understand What You Just Ran**
-   - Read [Module 04: Basic MCP Server](04-basic-mcp-server/README.md)
-   - Examine the code in `04-basic-mcp-server/examples/minimal_server.py`
-   - See what makes an MCP server work
+**For Complete Understanding:**
+- Read the conceptual overview in Module 01
+- Connect a free server from mcp.so to Cursor IDE
+- Follow the step-by-step testing guide
 
-3. **Test Your Server Properly**
-   - Install and use MCP Inspector (covered in Module 04)
-   - Connect to Cursor IDE (covered in Module 06)
-   - Write tests for your server (covered in Module 08)
-
-4. **Build Your Own Server**
-   - Follow [Tutorial 1: Hello World](04-basic-mcp-server/exercises/tutorial-1-hello-world.md)
-   - Complete [Tutorial 2: Simple Tools](04-basic-mcp-server/exercises/tutorial-2-simple-tools.md)
-   - Try the challenge problems
+**For Code Examples:**
+- Browse [advanced/04-basic-mcp-server/](advanced/04-basic-mcp-server/examples/) for Python examples
+- Explore [advanced/03-docker-mcp-ecosystem/](advanced/03-docker-mcp-ecosystem/) for Docker patterns
 
 ### Learning Paths
 
-**If you have 30 more minutes:**
-- Try Module 03 to use pre-built catalog servers
-- Or complete Module 04 Tutorial 1
-- Test with the MCP Inspector
+**If you want the simplified experience:**
+- Follow the **[new 3-module learning path](LEARNING_PATH.md)**
+- Total time: 4-6 hours
+- Perfect for beginners
 
-**If you have 2-3 hours:**
-- Read Module 01 (Introduction) for conceptual foundation
-- Try Module 03 (Docker MCP Ecosystem) for quick wins
-- Complete Module 04 (Basic Server) fully
+**If you want comprehensive content:**
+- Explore the **[advanced directory](advanced/)**
+- Total time: 16-23 hours
+- Deep-dive into all topics
 
-**If you want to build something real:**
-- Follow the [Learning Path](README.md#learning-path)
-- Focus on Module 06 (Integration Patterns)
-- Build a custom MCP server for your use case
+### Recommended Learning Options
 
-### Recommended Reading Order
+**Fastest Path (2 hours):**
+- [Module 01 QuickStart](01-introduction-quickstart/) - Connect to existing server (10 min)
+- [Module 03 Phase 2](03-building-with-docker/phase-2-simple-custom-server.md) - Build simple server (60-90 min)
 
-1. **[Module 01: Introduction](01-introduction/README.md)** - Understand what MCP is and why it matters
-2. **[Module 02: Environment Setup](02-environment-setup/README.md)** - Already done if you followed this guide!
-3. **[Module 03: Docker MCP Ecosystem](03-docker-mcp-ecosystem/README.md)** - Use pre-built servers (quick win!)
-4. **[Module 04: Basic MCP Server](04-basic-mcp-server/README.md)** - Build from scratch (deep understanding)
+**Complete Beginner Path (4-6 hours):**
+- All three modules in sequence
+- See [LEARNING_PATH.md](LEARNING_PATH.md) for details
+
+**Advanced & Comprehensive (16-23 hours):**
+- All advanced modules
+- See [advanced/README.md](advanced/README.md)
 
 ---
 
