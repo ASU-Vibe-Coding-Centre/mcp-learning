@@ -1,0 +1,9 @@
+{
+  "_note": "Replace this placeholder with your exported n8n JSON for Workflow A (MCP Server).",
+  "workflowName": "MCP Server",
+  "tools": [
+    { "name": "greet", "inputs": ["name"], "output": { "message": "string" } },
+    { "name": "add", "inputs": ["a", "b"], "output": { "sum": "number" } },
+    { "name": "timestamp", "inputs": [], "output": { "iso": "string" } }
+  ]
+}

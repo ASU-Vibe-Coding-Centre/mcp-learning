@@ -310,7 +310,7 @@ pip install --force-reinstall -r requirements.txt
 - Example files are in Module 04
 
 **Still stuck?**
-- Check [Module 08: Debugging & Troubleshooting](08-debugging-troubleshooting/README.md)
+- Check [Module 08: Debugging & Troubleshooting](advanced/08-debugging-troubleshooting/README.md)
 - Review the [Docker setup guide](docker/README.md) for detailed Docker help
 - Open an issue on GitHub with your error message
 
@@ -378,5 +378,5 @@ deactivate
 
 **Time to completion:** 5-10 minutes
 
-**Next:** [Module 01: Introduction](01-introduction/README.md) OR [Module 03: Docker MCP Ecosystem](03-docker-mcp-ecosystem/README.md) OR [Module 04: Basic MCP Server](04-basic-mcp-server/README.md)
+**Next:** [Module 01: Introduction & QuickStart](01-introduction-quickstart/) OR [Module 03: Building with Docker](03-building-with-docker/) OR [Advanced: Basic MCP Server](advanced/04-basic-mcp-server/README.md)
 

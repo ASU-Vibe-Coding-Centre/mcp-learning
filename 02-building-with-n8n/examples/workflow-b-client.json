@@ -1,0 +1,15 @@
+{
+  "_note": "Replace this placeholder with your exported n8n JSON for Workflow B (MCP Client).",
+  "workflowName": "MCP Client",
+  "trigger": {
+    "type": "http",
+    "method": "POST",
+    "path": "/mcp-client"
+  },
+  "requestExample": { "tool": "add", "params": { "a": 2, "b": 3 } },
+  "mcpClient": {
+    "toolFrom": "$.tool",
+    "paramsFrom": "$.params"
+  },
+  "response": { "ok": true, "result": {} }
+}
