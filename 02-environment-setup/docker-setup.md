@@ -88,6 +88,25 @@ Docker is a platform for developing, shipping, and running applications in conta
 - Free for personal use, education, small businesses
 - Requires license for larger companies (check [Docker pricing](https://www.docker.com/pricing/))
 
+### Docker Desktop with MCP Toolkit (New!)
+
+**Docker Desktop 4.25+** includes the **MCP Toolkit** - a built-in GUI for discovering, installing, and managing MCP servers from the Docker MCP Catalog.
+
+**What's included:**
+- Browse 200+ pre-built MCP servers
+- One-click installation and configuration
+- Visual server management
+- Built-in Gateway for multi-server orchestration
+- Auto-configuration for AI clients (Claude, Cursor, etc.)
+
+**Best for:**
+- Quick access to catalog servers
+- Visual server management
+- Exploring available MCP integrations
+- Zero-configuration setup
+
+**See Module 03** for complete Docker MCP ecosystem coverage: [03-docker-mcp-ecosystem](../03-docker-mcp-ecosystem/)
+
 ---
 
 ## Docker CLI Installation
@@ -280,6 +299,17 @@ docker compose version
 docker run hello-world
 ```
 
+**Step 5: Access MCP Toolkit** (Docker Desktop 4.25+)
+
+1. Open Docker Desktop
+2. Look for "MCP" in the sidebar menu
+3. Click to browse the Docker MCP Catalog
+4. Install and manage MCP servers visually
+
+**Note**: If you don't see the MCP section, ensure you have Docker Desktop 4.25 or later. Check for updates in Docker Desktop → Check for updates.
+
+For detailed MCP Toolkit usage, see [Module 03: Docker MCP Ecosystem](../03-docker-mcp-ecosystem/)
+
 ### Linux
 
 **Step 1: Download**
@@ -321,6 +351,12 @@ docker --version
 docker run hello-world
 ```
 
+**Step 4: Access MCP Toolkit** (Docker Desktop 4.25+)
+
+Same as macOS - look for "MCP" in the Docker Desktop sidebar to access the MCP Toolkit and catalog.
+
+For detailed MCP Toolkit usage, see [Module 03: Docker MCP Ecosystem](../03-docker-mcp-ecosystem/)
+
 ### Windows
 
 **Step 1: Prerequisites**
@@ -355,6 +391,12 @@ docker --version
 docker compose version
 docker run hello-world
 ```
+
+**Step 6: Access MCP Toolkit** (Docker Desktop 4.25+)
+
+Open Docker Desktop on Windows and look for "MCP" in the sidebar to access the MCP Toolkit and catalog.
+
+For detailed MCP Toolkit usage, see [Module 03: Docker MCP Ecosystem](../03-docker-mcp-ecosystem/)
 
 ---
 

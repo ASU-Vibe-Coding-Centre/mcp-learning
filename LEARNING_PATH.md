@@ -4,9 +4,9 @@ This guide helps you navigate the MCP Server Learning Repository based on your g
 
 ## Overview
 
-**Total Time Investment:** 14-20 hours for complete mastery  
+**Total Time Investment:** 16-23 hours for complete mastery  
 **Quick Start:** 90 minutes to first working server  
-**Modules:** 7 progressive modules from concepts to production
+**Modules:** 8 progressive modules from concepts to production
 
 ---
 
@@ -63,9 +63,44 @@ This guide helps you navigate the MCP Server Learning Repository based on your g
 
 ---
 
-### Module 03: Basic MCP Server (2-3 hours)
+### Module 03: Docker MCP Ecosystem (2-3 hours)
 
-**Focus:** Hands-On Building
+**Focus:** Using Docker's MCP Infrastructure
+
+**What You'll Learn:**
+- Docker MCP Catalog (200+ pre-built servers)
+- Docker MCP Toolkit (GUI management)
+- Docker MCP Gateway (orchestration)
+- Using catalog servers vs building custom
+- Publishing servers to Docker Hub
+- Best practices for containerization
+
+**Prerequisites:**
+- Module 02 completed (Docker installed)
+- Basic Docker knowledge helpful but not required
+
+**Outcome:** Discover and use pre-built MCP servers, understand Docker's MCP ecosystem
+
+**Exercises:**
+- Tutorial 1: Using catalog servers
+- Tutorial 2: Docker MCP Toolkit setup
+- Tutorial 3: Gateway configuration
+- Challenge: Multi-server setup
+- Challenge: Publishing your server
+
+**Best For:**
+- Developers wanting quick wins with pre-built servers
+- Teams deploying MCP at scale
+- Anyone interested in containerization
+- Learning modern MCP deployment patterns
+
+[Start Module 03](03-docker-mcp-ecosystem/)
+
+---
+
+### Module 04: Basic MCP Server (2-3 hours)
+
+**Focus:** Hands-On Building from Scratch
 
 **What You'll Learn:**
 - Creating your first MCP server
@@ -78,6 +113,7 @@ This guide helps you navigate the MCP Server Learning Repository based on your g
 **Prerequisites:**
 - Module 02 completed (environment ready)
 - Basic Python knowledge
+- Module 03 helpful but optional
 
 **Outcome:** Build and run functional MCP servers with multiple tools
 
@@ -92,12 +128,13 @@ This guide helps you navigate the MCP Server Learning Repository based on your g
 - Developers building their first MCP server
 - Anyone who learns by doing
 - Teams onboarding to MCP development
+- Understanding MCP internals deeply
 
-[Start Module 03](03-basic-mcp-server/)
+[Start Module 04](04-basic-mcp-server/)
 
 ---
 
-### Module 04: Advanced Features (3-4 hours)
+### Module 05: Advanced Features (3-4 hours)
 
 **Focus:** Power User Techniques
 
@@ -110,7 +147,7 @@ This guide helps you navigate the MCP Server Learning Repository based on your g
 - Combining tools, resources, and prompts
 
 **Prerequisites:**
-- Module 03 completed (basic servers)
+- Module 04 completed (basic servers)
 - Comfortable with Python async/await
 - Understanding of JSON Schema
 
@@ -127,11 +164,11 @@ This guide helps you navigate the MCP Server Learning Repository based on your g
 - Those needing advanced MCP features
 - Projects with complex data requirements
 
-[Start Module 04](04-advanced-features/)
+[Start Module 05](05-advanced-features/)
 
 ---
 
-### Module 05: Integration Patterns (3-4 hours)
+### Module 06: Integration Patterns (3-4 hours)
 
 **Focus:** Real-World Connections
 
@@ -139,13 +176,15 @@ This guide helps you navigate the MCP Server Learning Repository based on your g
 - Integrating with Claude Desktop
 - Using MCP Inspector for debugging
 - Multi-server scenarios and composition
+- Docker Toolkit and Gateway integration
 - GitHub API integration patterns
 - Git operations server
 - Web scraping with MCP
 - Real-world caching and rate limiting
 
 **Prerequisites:**
-- Module 03 completed (can skip Module 04 if needed)
+- Module 04 completed (can skip Module 05 if needed)
+- Module 03 recommended for Docker patterns
 - Understanding of REST APIs helpful
 - Git knowledge for Git integration examples
 
@@ -162,11 +201,11 @@ This guide helps you navigate the MCP Server Learning Repository based on your g
 - Teams deploying MCP in production
 - Anyone connecting to external services
 
-[Start Module 05](05-integration-patterns/)
+[Start Module 06](06-integration-patterns/)
 
 ---
 
-### Module 06: Security & Best Practices (2-3 hours)
+### Module 07: Security & Best Practices (2-3 hours)
 
 **Focus:** Production-Ready Code
 
@@ -180,7 +219,7 @@ This guide helps you navigate the MCP Server Learning Repository based on your g
 - Security audit techniques
 
 **Prerequisites:**
-- Module 03 completed
+- Module 04 completed
 - Basic security awareness
 
 **Outcome:** Build secure, production-ready MCP servers
@@ -196,11 +235,11 @@ This guide helps you navigate the MCP Server Learning Repository based on your g
 - Security-conscious teams
 - Anyone handling sensitive data
 
-[Start Module 06](06-security-best-practices/)
+[Start Module 07](07-security-best-practices/)
 
 ---
 
-### Module 07: Debugging & Troubleshooting (2-3 hours)
+### Module 08: Debugging & Troubleshooting (2-3 hours)
 
 **Focus:** Problem Solving
 
@@ -213,7 +252,7 @@ This guide helps you navigate the MCP Server Learning Repository based on your g
 - Mock testing for MCP servers
 
 **Prerequisites:**
-- Module 03 completed
+- Module 04 completed
 - Experience with at least one broken MCP server (you'll have this!)
 
 **Outcome:** Quickly diagnose and fix issues in MCP servers
@@ -229,7 +268,7 @@ This guide helps you navigate the MCP Server Learning Repository based on your g
 - Developers troubleshooting issues
 - Teams establishing testing practices
 
-[Start Module 07](07-debugging-troubleshooting/)
+[Start Module 08](08-debugging-troubleshooting/)
 
 ---
 
@@ -244,15 +283,35 @@ This guide helps you navigate the MCP Server Learning Repository based on your g
 **Steps:**
 1. Read Module 01 README (20 min) - Skim for concepts
 2. Complete Module 02 (30 min) - Setup environment
-3. Complete Module 03 Tutorial 1 (40 min) - Build first server
+3. Complete Module 04 Tutorial 1 (40 min) - Build first server
 
 **Total Time:** ~90 minutes
 
-**Next Steps:** Return to Module 03 for more exercises, or jump to Module 05 for integrations
+**Next Steps:** Try Module 03 for pre-built servers, return to Module 04 for more exercises, or jump to Module 06 for integrations
 
 ---
 
-### Path 2: Comprehensive Mastery (14-20 hours)
+### Path 2: Docker-First Quick Start (2 hours)
+
+**Goal:** Use pre-built servers immediately, then understand how they work
+
+**For:** Pragmatic learners, teams wanting immediate value, Docker enthusiasts
+
+**Steps:**
+1. Read Module 01 README (20 min) - Skim for concepts
+2. Complete Module 02 (30 min) - Setup Docker Desktop
+3. Complete Module 03 Tutorial 1-2 (60 min) - Use catalog servers
+4. Skim Module 04 examples (10 min) - Understand server internals
+
+**Total Time:** ~2 hours
+
+**Outcome:** Using real MCP servers immediately, understanding what they do
+
+**Next Steps:** Module 04 to build custom servers, Module 06 for advanced integrations
+
+---
+
+### Path 3: Comprehensive Mastery (16-23 hours)
 
 **Goal:** Complete understanding of MCP server development
 
@@ -261,20 +320,21 @@ This guide helps you navigate the MCP Server Learning Repository based on your g
 **Steps:**
 1. Module 01 - Introduction (1-2 hours)
 2. Module 02 - Environment Setup (30-60 min)
-3. Module 03 - Basic MCP Server (2-3 hours) - Complete all exercises
-4. Module 04 - Advanced Features (3-4 hours) - Complete all exercises
-5. Module 05 - Integration Patterns (3-4 hours) - Complete all exercises
-6. Module 06 - Security & Best Practices (2-3 hours) - Complete all exercises
-7. Module 07 - Debugging & Troubleshooting (2-3 hours) - Complete all exercises
-8. Build a custom integration project (2-4 hours)
+3. Module 03 - Docker MCP Ecosystem (2-3 hours) - Complete all exercises
+4. Module 04 - Basic MCP Server (2-3 hours) - Complete all exercises
+5. Module 05 - Advanced Features (3-4 hours) - Complete all exercises
+6. Module 06 - Integration Patterns (3-4 hours) - Complete all exercises
+7. Module 07 - Security & Best Practices (2-3 hours) - Complete all exercises
+8. Module 08 - Debugging & Troubleshooting (2-3 hours) - Complete all exercises
+9. Build a custom integration project (2-4 hours)
 
-**Total Time:** 14-20 hours + project time
+**Total Time:** 16-23 hours + project time
 
 **Outcome:** Complete mastery of MCP server development
 
 ---
 
-### Path 3: Integration-Focused (8-10 hours)
+### Path 4: Integration-Focused (10-12 hours)
 
 **Goal:** Build real-world integrations quickly
 
@@ -283,19 +343,20 @@ This guide helps you navigate the MCP Server Learning Repository based on your g
 **Steps:**
 1. Module 01 - Introduction (1 hour) - Focus on comparisons section
 2. Module 02 - Environment Setup (30 min)
-3. Module 03 - Basic MCP Server (2 hours) - Complete tutorials only
-4. Module 05 - Integration Patterns (3-4 hours) - Complete all exercises
-5. Module 06 - Security & Best Practices (2 hours) - Focus on production sections
-6. Build your specific integration (varies)
+3. Module 03 - Docker MCP Ecosystem (2 hours) - Tutorials 1-2 for quick deployment
+4. Module 04 - Basic MCP Server (2 hours) - Complete tutorials only
+5. Module 06 - Integration Patterns (3-4 hours) - Complete all exercises
+6. Module 07 - Security & Best Practices (2 hours) - Focus on production sections
+7. Build your specific integration (varies)
 
-**Total Time:** 8-10 hours + integration project
+**Total Time:** 10-12 hours + integration project
 
-**Skip:** Module 04 (return later if you need advanced features)  
-**Optional:** Module 07 as reference when debugging
+**Skip:** Module 05 (return later if you need advanced features)  
+**Optional:** Module 08 as reference when debugging
 
 ---
 
-### Path 4: Experienced Developer Fast Track (5-7 hours)
+### Path 5: Experienced Developer Fast Track (6-8 hours)
 
 **Goal:** Efficient learning for experienced programmers
 
@@ -304,13 +365,14 @@ This guide helps you navigate the MCP Server Learning Repository based on your g
 **Steps:**
 1. Module 01 - Introduction (30 min) - Skim, focus on architecture
 2. Module 02 - Environment Setup (20 min) - Quick setup
-3. Module 03 - Basic MCP Server (90 min) - Tutorial 1, then read examples
-4. Module 04 - Advanced Features (90 min) - Read code examples primarily
-5. Module 05 - Integration Patterns (2 hours) - Focus on patterns you need
-6. Module 06 - Security & Best Practices (60 min) - Review checklist and examples
-7. Build production server for your use case (varies)
+3. Module 03 - Docker MCP Ecosystem (60 min) - Understand deployment patterns
+4. Module 04 - Basic MCP Server (90 min) - Tutorial 1, then read examples
+5. Module 05 - Advanced Features (90 min) - Read code examples primarily
+6. Module 06 - Integration Patterns (2 hours) - Focus on patterns you need
+7. Module 07 - Security & Best Practices (60 min) - Review checklist and examples
+8. Build production server for your use case (varies)
 
-**Total Time:** 5-7 hours + project
+**Total Time:** 6-8 hours + project
 
 **Approach:** Read code first, documentation second. Do challenges instead of tutorials.
 
@@ -321,22 +383,24 @@ This guide helps you navigate the MCP Server Learning Repository based on your g
 ### Beginner → Intermediate
 
 **Starting Point:** Basic Python knowledge, no MCP experience  
-**Modules:** 01, 02, 03  
-**Time:** 4-6 hours  
-**Outcome:** Can build and run simple MCP servers with basic tools
+**Modules:** 01, 02, 03, 04  
+**Time:** 5-8 hours  
+**Outcome:** Can use pre-built servers and build simple custom MCP servers
 
 **Skills Gained:**
 - Understanding of MCP protocol fundamentals
+- Using Docker MCP Catalog and Toolkit
 - Ability to implement tools with JSON Schema
 - Basic server lifecycle management
 - Testing with MCP Inspector
+- Containerization basics
 
 ---
 
 ### Intermediate → Advanced
 
 **Starting Point:** Built basic MCP servers  
-**Modules:** 04, 05  
+**Modules:** 05, 06  
 **Time:** 6-8 hours  
 **Outcome:** Can build production-ready integrations with advanced features
 
@@ -346,13 +410,14 @@ This guide helps you navigate the MCP Server Learning Repository based on your g
 - Real-world API integrations
 - Multi-server architectures
 - Claude Desktop integration
+- Docker Gateway orchestration
 
 ---
 
 ### Advanced → Production-Ready
 
 **Starting Point:** Built advanced MCP servers  
-**Modules:** 06, 07  
+**Modules:** 07, 08  
 **Time:** 4-6 hours  
 **Outcome:** Can deploy secure, maintainable MCP servers to production
 
@@ -372,26 +437,32 @@ Module 01 (Introduction)
     │
     ├─→ Module 02 (Environment Setup)
     │       │
-    │       └─→ Module 03 (Basic MCP Server) ◄─── Start here for hands-on
+    │       ├─→ Module 03 (Docker MCP Ecosystem) ◄─── Use pre-built servers
+    │       │       │
+    │       │       └─→ Module 06 (Integration Patterns)
+    │       │
+    │       └─→ Module 04 (Basic MCP Server) ◄─── Build from scratch
     │               │
-    │               ├─→ Module 04 (Advanced Features)
+    │               ├─→ Module 05 (Advanced Features)
     │               │       │
-    │               │       └─→ Module 05 (Integration Patterns)
+    │               │       └─→ Module 06 (Integration Patterns)
     │               │
-    │               ├─→ Module 05 (Integration Patterns) ◄─── Can skip Module 04
+    │               ├─→ Module 06 (Integration Patterns) ◄─── Can skip Module 05
     │               │
-    │               ├─→ Module 06 (Security & Best Practices)
+    │               ├─→ Module 07 (Security & Best Practices)
     │               │
-    │               └─→ Module 07 (Debugging & Troubleshooting)
+    │               └─→ Module 08 (Debugging & Troubleshooting)
     │
-    └─→ Module 05 (Integration Patterns) ◄─── For architects/decision makers
+    └─→ Module 06 (Integration Patterns) ◄─── For architects/decision makers
 ```
 
 **Key Paths:**
-- **Conceptual:** 01 → 05 (understanding without building)
-- **Hands-On:** 02 → 03 → 04 → 05 (build everything)
-- **Quick:** 02 → 03 (minimal time investment)
-- **Production:** 03 → 05 → 06 → 07 (deployment-focused)
+- **Docker-First:** 02 → 03 → 06 (use pre-built, then integrate)
+- **Build-First:** 02 → 04 → 05 → 06 (understand deeply, then integrate)
+- **Balanced:** 02 → 03 → 04 → 06 (use and build)
+- **Conceptual:** 01 → 06 (understanding without building)
+- **Quick:** 02 → 04 (minimal time investment)
+- **Production:** 03 → 04 → 06 → 07 → 08 (deployment-focused)
 
 ---
 
@@ -431,26 +502,33 @@ Use these to verify your progress:
 - [ ] MCP SDK is installed and importable
 
 **After Module 03:**
+- [ ] Used at least one pre-built MCP server from catalog
+- [ ] Configured Docker MCP Toolkit
+- [ ] Understand local vs remote servers
+- [ ] Connected catalog server to AI client
+
+**After Module 04:**
 - [ ] Built and ran at least one MCP server
 - [ ] Implemented multiple tools with schemas
 - [ ] Tested server with MCP Inspector or similar
 
-**After Module 04:**
+**After Module 05:**
 - [ ] Implemented streaming responses
 - [ ] Exposed resources with proper URIs
 - [ ] Created prompt templates
 
-**After Module 05:**
+**After Module 06:**
 - [ ] Connected server to Claude Desktop or MCP client
 - [ ] Integrated with external API
 - [ ] Understand multi-server patterns
+- [ ] Configured Docker Gateway (optional)
 
-**After Module 06:**
+**After Module 07:**
 - [ ] Implemented input validation
 - [ ] Added proper error handling
 - [ ] Understand security best practices
 
-**After Module 07:**
+**After Module 08:**
 - [ ] Can debug common MCP server issues
 - [ ] Wrote tests for an MCP server
 - [ ] Understand performance optimization
@@ -511,5 +589,5 @@ Use these to verify your progress:
 
 **Ready to start?** Head to [Quick Start Guide](QUICK_START.md) or [Module 01](01-introduction/)
 
-**Questions?** Check [Module 07: Debugging & Troubleshooting](07-debugging-troubleshooting/) or open an issue on GitHub.
+**Questions?** Check [Module 08: Debugging & Troubleshooting](08-debugging-troubleshooting/) or open an issue on GitHub.
 

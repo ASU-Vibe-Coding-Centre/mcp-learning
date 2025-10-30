@@ -21,9 +21,9 @@ Whether you're completely new to MCP or an AI engineer looking to expand your in
 
 ### Key Features
 
-- **Progressive Learning**: 7 modules from introduction to advanced topics
+- **Progressive Learning**: 8 modules from introduction to advanced topics
 - **Hands-On Exercises**: Step-by-step tutorials and challenge problems with solutions
-- **Docker-Ready**: Flexible setup with command-line Docker or Docker Desktop
+- **Docker-Ready**: Complete coverage of both Docker CLI and Docker Desktop workflows
 - **AI-Assisted**: Built-in Cursor rules and prompts for guided learning
 - **Production-Ready**: Security best practices and debugging strategies included
 
@@ -32,18 +32,23 @@ Whether you're completely new to MCP or an AI engineer looking to expand your in
 ## Table of Contents
 
 1. [What is MCP?](#what-is-mcp)
-2. [MCP Architecture](#mcp-architecture)
-3. [Why MCP Matters](#why-mcp-matters)
-4. [When to Use MCP vs Alternatives](#when-to-use-mcp-vs-alternatives)
+2. [Docker MCP Ecosystem](#docker-mcp-ecosystem)
+   - [Docker MCP Catalog](#1-docker-mcp-catalog)
+   - [Docker MCP Toolkit](#2-docker-mcp-toolkit)
+   - [Docker MCP Gateway](#3-docker-mcp-gateway)
+   - [Docker Hub MCP Integration](#4-docker-hub-mcp-integration)
+3. [MCP Architecture](#mcp-architecture)
+4. [Why MCP Matters](#why-mcp-matters)
+5. [When to Use MCP vs Alternatives](#when-to-use-mcp-vs-alternatives)
    - [MCP vs LangChain Tools](#mcp-vs-langchain-tools)
    - [MCP vs n8n AI Agents](#mcp-vs-n8n-ai-agents)
    - [Key Trade-offs](#key-trade-offs)
-5. [Prerequisites](#prerequisites)
-6. [Quick Start](#quick-start)
-7. [Learning Path](#learning-path)
-8. [Resources](#resources)
-9. [Contributing](#contributing)
-10. [License](#license)
+6. [Prerequisites](#prerequisites)
+7. [Quick Start](#quick-start)
+8. [Learning Path](#learning-path)
+9. [Resources](#resources)
+10. [Contributing](#contributing)
+11. [License](#license)
 
 ---
 
@@ -80,6 +85,349 @@ MCP follows a **client-server architecture**:
 - **Communication** happens via JSON-RPC 2.0 over standard transport layers (stdio or HTTP)
 
 This separation means tool developers can focus on building great integrations, while AI application developers can easily connect to a growing ecosystem of MCP servers.
+
+## Docker MCP Ecosystem
+
+Docker has built a comprehensive ecosystem around MCP that makes it easier than ever to discover, deploy, and manage MCP servers. Understanding Docker's MCP components is essential for modern MCP development.
+
+### Overview
+
+Docker's MCP ecosystem consists of four key components that work together:
+
+1. **Docker MCP Catalog** - A centralized registry of pre-built, verified MCP servers
+2. **Docker MCP Toolkit** - A GUI and gateway for managing MCP servers in Docker Desktop
+3. **Docker MCP Gateway** - An orchestration layer for running multiple MCP servers
+4. **Docker Hub MCP Integration** - Publishing and distribution infrastructure
+
+### Why Docker for MCP?
+
+Before Docker's MCP ecosystem, running MCP servers presented several challenges:
+
+- **Environment conflicts**: Python dependencies clashing with system packages
+- **Lack of isolation**: Servers potentially exposing the host system
+- **Setup complexity**: Manual installation and configuration
+- **Platform inconsistencies**: Different behavior on macOS, Linux, Windows
+
+Docker solves these problems by **containerizing MCP servers** - whether you use Docker Desktop (GUI) or Docker CLI (command-line):
+
+```
+Traditional Approach:              Docker Approach:
+┌─────────────────────┐           ┌──────────────────────┐
+│   Your Machine      │           │   Your Machine       │
+│                     │           │                      │
+│  Python 3.9         │           │  ┌────────────────┐  │
+│  MCP Server A       │           │  │  Container 1   │  │
+│  Dependencies...    │           │  │  Python 3.11   │  │
+│                     │           │  │  MCP Server A  │  │
+│  Python 3.11        │           │  └────────────────┘  │
+│  MCP Server B       │           │                      │
+│  Dependencies...    │           │  ┌────────────────┐  │
+│  [CONFLICTS!]       │           │  │  Container 2   │  │
+│                     │           │  │  Python 3.9    │  │
+└─────────────────────┘           │  │  MCP Server B  │  │
+                                  │  └────────────────┘  │
+                                  │  [Isolated!]         │
+                                  └──────────────────────┘
+```
+
+### 1. Docker MCP Catalog
+
+The **Docker MCP Catalog** is a centralized, curated registry of MCP servers available on Docker Hub.
+
+**Key Features:**
+- **200+ verified MCP servers** from Docker and partners
+- **Versioned releases** with image signing and attestation
+- **Local and remote server** options
+- **Metadata-rich listings** showing capabilities, tools, and configuration
+
+**Server Types:**
+
+**Local MCP Servers** (Docker whale icon)
+- Built and digitally signed by Docker
+- Run as containers on your machine
+- Work offline once downloaded
+- Predictable performance and complete data privacy
+
+**Remote MCP Servers** (Cloud icon)
+- Hosted services accessed over the internet
+- Maintained by service providers
+- Always up-to-date with live data
+- No local resource usage
+
+**Example Catalog Servers:**
+- **New Relic** - Application monitoring and observability
+- **Stripe** - Payment processing and financial data
+- **Grafana** - Metrics visualization and dashboards
+- **GitHub** - Repository management and code operations
+- **PostgreSQL** - Database operations
+- **Filesystem** - Local file system access
+- **And 200+ more...**
+
+**Finding Servers:**
+- Browse at: `https://hub.docker.com/u/mcp`
+- In Docker Desktop: MCP Toolkit → Browse Catalog
+- All servers in `mcp/` namespace on Docker Hub
+
+### 2. Docker MCP Toolkit
+
+The **Docker MCP Toolkit** is integrated into Docker Desktop and provides a **GUI-based management system** for MCP servers.
+
+**Key Features:**
+
+**Zero Manual Setup**
+- No dependency management or runtime configuration
+- Pull, run, and connect servers with one click
+- Automatic container lifecycle management
+
+**Cross-LLM Compatibility**
+- Works with Claude Desktop, Cursor, Continue.dev, Gordon
+- Single configuration works across all clients
+- Unified endpoint for all your MCP servers
+
+**Integrated Tool Discovery**
+- Browse Docker MCP Catalog directly in Docker Desktop
+- See server capabilities before installing
+- Enable/disable servers via GUI
+
+**Security Built-in**
+- Image signing and attestation verification
+- Resource limitations (1 CPU, 2GB memory default)
+- No default filesystem access
+- Secure secret management for API keys
+
+**How It Works:**
+
+```
+┌────────────────────────────────────────────────────────┐
+│           Docker Desktop (MCP Toolkit)                  │
+│                                                        │
+│  ┌──────────────────────────────────────────────────┐ │
+│  │  MCP Catalog Browser                              │ │
+│  │  - Browse 200+ servers                            │ │
+│  │  - View capabilities and docs                     │ │
+│  │  - One-click install                              │ │
+│  └──────────────────────────────────────────────────┘ │
+│                                                        │
+│  ┌──────────────────────────────────────────────────┐ │
+│  │  MCP Server Manager                               │ │
+│  │  ✓ GitHub Server (running)                        │ │
+│  │  ✓ PostgreSQL Server (running)                    │ │
+│  │  ○ Stripe Server (stopped)                        │ │
+│  └──────────────────────────────────────────────────┘ │
+│                                                        │
+│  ┌──────────────────────────────────────────────────┐ │
+│  │  Client Configuration                             │ │
+│  │  • Claude Desktop: Connected                      │ │
+│  │  • Cursor: Connected                              │ │
+│  │  • Continue.dev: Not configured                   │ │
+│  └──────────────────────────────────────────────────┘ │
+│                                                        │
+│         MCP Gateway (Aggregator + Proxy)              │
+│                Single Endpoint ↓                       │
+└───────────────────────┬────────────────────────────────┘
+                        │
+        ┌───────────────┼───────────────┐
+        │               │               │
+    Container 1     Container 2     Container 3
+    (GitHub)        (PostgreSQL)    (Stripe)
+```
+
+**Using the Toolkit:**
+
+1. **Open Docker Desktop** → Navigate to MCP Toolkit section
+2. **Browse Catalog** → Find servers you need
+3. **Install Servers** → One-click pull and configure
+4. **Manage Secrets** → Add API keys securely via GUI
+5. **Connect Clients** → Configure Claude, Cursor, etc.
+6. **Start Using** → Servers are instantly available to AI applications
+
+**Prefer Command Line?** All Docker MCP features are fully available via Docker CLI with `docker` and `docker compose` commands - perfect for scriptable workflows, CI/CD pipelines, and server environments. See [Module 03: Using MCP Servers with Docker CLI](./03-docker-mcp-ecosystem/README.md#using-mcp-servers-with-docker-cli) for complete CLI usage guide.
+
+### 3. Docker MCP Gateway
+
+The **Docker MCP Gateway** is an open-source orchestration layer that acts as a centralized proxy between clients and servers.
+
+**Key Features:**
+
+**Centralized Management**
+- Single endpoint for all MCP servers
+- Gateway handles server lifecycle, routing, and authentication
+- Clients connect once, access all servers
+
+**Configuration Management**
+- Unified configuration for multiple servers
+- Credential and secret management
+- Access control and permissions
+
+**Multi-Server Orchestration**
+- Route requests to appropriate servers
+- Load balancing across server instances
+- Health checks and automatic recovery
+
+**Architecture:**
+
+```
+┌──────────────────────────────────────────────────────┐
+│  AI Clients (Claude, Cursor, Custom Apps)            │
+└──────────────────┬───────────────────────────────────┘
+                   │ Single Connection
+                   │ (HTTP SSE or stdio)
+                   ▼
+┌──────────────────────────────────────────────────────┐
+│            Docker MCP Gateway                         │
+│                                                       │
+│  • Configuration Management                           │
+│  • Credential Management                              │
+│  • Routing & Load Balancing                          │
+│  • Access Control                                     │
+│  • Health Checks                                      │
+└──────┬──────────┬──────────┬─────────────────────────┘
+       │          │          │
+       ▼          ▼          ▼
+   MCP Server MCP Server MCP Server
+       1          2          N
+       │          │          │
+   External   External   External
+   Service A  Service B  Service C
+```
+
+**Benefits:**
+- **Simplified client configuration** - One connection instead of many
+- **Centralized security** - Single point for authentication and authorization
+- **Easier deployment** - Manage all servers through one gateway
+- **Better observability** - Unified logging and monitoring
+
+**Use Cases:**
+- **Development teams** running multiple MCP servers
+- **Production deployments** requiring centralized control
+- **Enterprise environments** with complex access requirements
+- **Multi-tenant systems** serving multiple clients
+
+### 4. Docker Hub MCP Integration
+
+Docker Hub serves as the **distribution platform** for MCP servers, similar to how it distributes other Docker images.
+
+**Key Features:**
+
+**MCP Namespace (`mcp/`)**
+- All Docker-built MCP servers published under `mcp/` namespace
+- Example: `mcp/github`, `mcp/postgres`, `mcp/filesystem`
+- Verified and digitally signed by Docker
+
+**Publishing Your Servers**
+- Build MCP servers as Docker images
+- Publish to Docker Hub (your own namespace or contribute to catalog)
+- Version management and image tags
+- Automated builds and CI/CD integration
+
+**Contributing to Catalog**
+- Submit servers via: `https://github.com/docker/mcp-registry`
+- Follow contribution guidelines
+- Available on Docker Desktop within 24 hours of approval
+
+### Integration with E2B Sandboxes
+
+E2B Sandboxes now include **direct access to the Docker MCP Catalog**, providing developers with 200+ tools and services to build and run AI agents seamlessly.
+
+### Docker MCP vs Custom MCP Servers
+
+**When to use Docker MCP Catalog:**
+- Quickly access pre-built, verified tools
+- Standard integrations (GitHub, databases, filesystems)
+- Production-ready servers with security built-in
+- Don't want to maintain server code
+
+**When to build custom MCP servers:**
+- Unique business logic or proprietary integrations
+- Internal tools specific to your organization
+- Learning and understanding MCP fundamentals
+- Custom workflows not available in catalog
+
+**Best Practice:** Start with catalog servers, build custom servers for specialized needs, then consider publishing your custom servers back to the catalog for the community.
+
+### Getting Started with Docker MCP
+
+**Quick Start (Docker Desktop - GUI Approach):**
+
+1. **Install Docker Desktop**
+   - Download from: [docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop)
+   - Includes MCP Toolkit automatically
+
+2. **Access MCP Toolkit**
+   - Open Docker Desktop → MCP section
+   - Browse available servers in catalog
+
+3. **Install Your First Server**
+   - Click on a server (e.g., `mcp/filesystem`)
+   - Click "Install" or "Enable"
+   - Configure any required settings
+
+4. **Connect to Client**
+   - Go to Client Configuration
+   - Select Claude Desktop, Cursor, or your client
+   - Follow connection instructions
+
+5. **Start Using**
+   - Open your AI client
+   - Servers are now available as tools
+   - AI can discover and use them automatically
+
+**Quick Start (Docker CLI - Command-Line Approach):**
+
+1. **Install Docker CLI**
+   ```bash
+   # macOS with Homebrew
+   brew install docker docker-compose colima
+   colima start
+   
+   # Linux (Ubuntu/Debian)
+   sudo apt-get install docker.io docker-compose
+   ```
+
+2. **Pull and Run a Server**
+   ```bash
+   # Pull filesystem server
+   docker pull mcp/filesystem:latest
+   
+   # Run it
+   docker run -d --name mcp-fs \
+     -v ~/Documents:/workspace \
+     mcp/filesystem:latest
+   ```
+
+3. **Or Use Docker Compose** (for multiple servers)
+   ```bash
+   # Create docker-compose.yml with your servers
+   docker compose up -d
+   ```
+
+**For detailed setup instructions**, see:
+- [Module 02: Environment Setup](02-environment-setup/) - Docker Desktop and Docker CLI installation
+- [Module 03: Docker MCP Ecosystem](03-docker-mcp-ecosystem/) - Complete guide to Catalog, Toolkit, Gateway, and CLI workflows
+
+### Docker MCP in This Learning Repository
+
+This repository covers **both approaches**:
+
+1. **Building custom MCP servers** (Modules 04-05)
+   - Learn MCP fundamentals by implementing from scratch
+   - Understand protocol, architecture, and patterns
+   - Build specialized servers for your needs
+
+2. **Using Docker MCP ecosystem** (Module 03)
+   - Discover and use pre-built servers
+   - Learn Docker MCP Toolkit and Gateway
+   - Publish your custom servers to Docker Hub
+
+**Recommended learning path:**
+1. Complete Module 01 (Introduction) to understand MCP concepts
+2. Try Module 03 (Docker MCP Ecosystem) to use pre-built servers
+3. Build custom servers in Modules 04-05 to learn deeply
+4. Return to Docker MCP to package and publish your servers
+
+This gives you both **quick practical wins** (using catalog servers) and **deep understanding** (building custom servers).
+
+---
 
 ## MCP Architecture
 
@@ -907,11 +1255,12 @@ This repository is organized into 7 progressive modules, from fundamental concep
 
 1. **[Module 01: Introduction](01-introduction/)** (1-2 hours) - MCP fundamentals and architecture
 2. **[Module 02: Environment Setup](02-environment-setup/)** (30-60 min) - Development environment configuration
-3. **[Module 03: Basic MCP Server](03-basic-mcp-server/)** (2-3 hours) - Build your first servers
-4. **[Module 04: Advanced Features](04-advanced-features/)** (3-4 hours) - Streaming, resources, and prompts
-5. **[Module 05: Integration Patterns](05-integration-patterns/)** (3-4 hours) - Real-world integrations
-6. **[Module 06: Security & Best Practices](06-security-best-practices/)** (2-3 hours) - Production-ready code
-7. **[Module 07: Debugging & Troubleshooting](07-debugging-troubleshooting/)** (2-3 hours) - Problem-solving skills
+3. **[Module 03: Docker MCP Ecosystem](03-docker-mcp-ecosystem/)** (2-3 hours) - Using Docker's MCP infrastructure
+4. **[Module 04: Basic MCP Server](04-basic-mcp-server/)** (2-3 hours) - Build your first servers
+5. **[Module 05: Advanced Features](05-advanced-features/)** (3-4 hours) - Streaming, resources, and prompts
+6. **[Module 06: Integration Patterns](06-integration-patterns/)** (3-4 hours) - Real-world integrations
+7. **[Module 07: Security & Best Practices](07-security-best-practices/)** (2-3 hours) - Production-ready code
+8. **[Module 08: Debugging & Troubleshooting](08-debugging-troubleshooting/)** (2-3 hours) - Problem-solving skills
 
 ## Resources
 

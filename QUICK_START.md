@@ -79,7 +79,7 @@ You're now inside the development environment!
 
 ```bash
 # Inside the container
-python 03-basic-mcp-server/examples/minimal_server.py
+python 04-basic-mcp-server/examples/minimal_server.py
 ```
 
 **Success!** Your MCP server is now running. You should see initialization messages.
@@ -92,7 +92,7 @@ Open a new terminal (keep the server running in the first one):
 # Enter the container in a new terminal
 docker-compose -f docker/docker-compose.yml exec dev bash
 
-# Test the server (instructions coming in Module 03)
+# Test the server (instructions coming in Module 04)
 # For now, just verify it started without errors
 ```
 
@@ -149,7 +149,7 @@ python -c "import mcp; print(f'MCP SDK version: {mcp.__version__}')"
 ### B4. Run Your First MCP Server
 
 ```bash
-python 03-basic-mcp-server/examples/minimal_server.py
+python 04-basic-mcp-server/examples/minimal_server.py
 ```
 
 **Success!** Your MCP server is now running.
@@ -161,7 +161,7 @@ Open a new terminal (keep the server running in the first one) and activate the 
 ```bash
 source venv/bin/activate  # or venv\Scripts\activate on Windows
 
-# Test commands will be covered in Module 03
+# Test commands will be covered in Module 04
 ```
 
 ### B6. Deactivate When Done
@@ -178,43 +178,49 @@ You've successfully run your first MCP server! Here's what to do next:
 
 ### Immediate Next Steps
 
-1. **Understand What You Just Ran**
-   - Read [Module 03: Basic MCP Server](03-basic-mcp-server/README.md)
-   - Examine the code in `03-basic-mcp-server/examples/minimal_server.py`
+1. **Try Pre-Built Servers First (Fastest)**
+   - Read [Module 03: Docker MCP Ecosystem](03-docker-mcp-ecosystem/README.md)
+   - Use Docker MCP Catalog servers immediately
+   - See real MCP servers in action
+
+2. **Understand What You Just Ran**
+   - Read [Module 04: Basic MCP Server](04-basic-mcp-server/README.md)
+   - Examine the code in `04-basic-mcp-server/examples/minimal_server.py`
    - See what makes an MCP server work
 
-2. **Test Your Server Properly**
-   - Install and use MCP Inspector (covered in Module 03)
-   - Connect to Claude Desktop (covered in Module 05)
-   - Write tests for your server (covered in Module 07)
+3. **Test Your Server Properly**
+   - Install and use MCP Inspector (covered in Module 04)
+   - Connect to Claude Desktop (covered in Module 06)
+   - Write tests for your server (covered in Module 08)
 
-3. **Build Your Own Server**
-   - Follow [Tutorial 1: Hello World](03-basic-mcp-server/exercises/tutorial-1-hello-world.md)
-   - Complete [Tutorial 2: Simple Tools](03-basic-mcp-server/exercises/tutorial-2-simple-tools.md)
+4. **Build Your Own Server**
+   - Follow [Tutorial 1: Hello World](04-basic-mcp-server/exercises/tutorial-1-hello-world.md)
+   - Complete [Tutorial 2: Simple Tools](04-basic-mcp-server/exercises/tutorial-2-simple-tools.md)
    - Try the challenge problems
 
 ### Learning Paths
 
 **If you have 30 more minutes:**
-- Complete Module 03 tutorials
-- Build a simple calculator MCP server
-- Test it with the MCP Inspector
+- Try Module 03 to use pre-built catalog servers
+- Or complete Module 04 Tutorial 1
+- Test with the MCP Inspector
 
 **If you have 2-3 hours:**
 - Read Module 01 (Introduction) for conceptual foundation
-- Complete Module 03 fully
-- Start Module 04 (Advanced Features)
+- Try Module 03 (Docker MCP Ecosystem) for quick wins
+- Complete Module 04 (Basic Server) fully
 
 **If you want to build something real:**
 - Follow the [Learning Path](README.md#learning-path)
-- Focus on Module 05 (Integration Patterns)
+- Focus on Module 06 (Integration Patterns)
 - Build a custom MCP server for your use case
 
 ### Recommended Reading Order
 
 1. **[Module 01: Introduction](01-introduction/README.md)** - Understand what MCP is and why it matters
 2. **[Module 02: Environment Setup](02-environment-setup/README.md)** - Already done if you followed this guide!
-3. **[Module 03: Basic MCP Server](03-basic-mcp-server/README.md)** - Start building real servers
+3. **[Module 03: Docker MCP Ecosystem](03-docker-mcp-ecosystem/README.md)** - Use pre-built servers (quick win!)
+4. **[Module 04: Basic MCP Server](04-basic-mcp-server/README.md)** - Build from scratch (deep understanding)
 
 ---
 
@@ -283,10 +289,10 @@ pip install --force-reinstall -r requirements.txt
 **Can't find example files**
 - Make sure you're in the `mcp-learning` directory
 - Run `ls` to see available folders
-- Example files will be created in Module 03
+- Example files are in Module 04
 
 **Still stuck?**
-- Check [Module 07: Debugging & Troubleshooting](07-debugging-troubleshooting/README.md)
+- Check [Module 08: Debugging & Troubleshooting](08-debugging-troubleshooting/README.md)
 - Review the [Docker setup guide](docker/README.md) for detailed Docker help
 - Open an issue on GitHub with your error message
 
@@ -346,7 +352,7 @@ deactivate
 - [ ] Docker running OR virtual environment activated
 - [ ] Dependencies installed
 - [ ] Minimal server runs without errors
-- [ ] Ready to start Module 01 or Module 03
+- [ ] Ready to start Module 01 or Module 04
 
 **Congratulations!** You're ready to learn MCP server development!
 
@@ -354,5 +360,5 @@ deactivate
 
 **Time to completion:** 5-10 minutes
 
-**Next:** [Module 01: Introduction](01-introduction/README.md) OR [Module 03: Basic MCP Server](03-basic-mcp-server/README.md)
+**Next:** [Module 01: Introduction](01-introduction/README.md) OR [Module 03: Docker MCP Ecosystem](03-docker-mcp-ecosystem/README.md) OR [Module 04: Basic MCP Server](04-basic-mcp-server/README.md)
 

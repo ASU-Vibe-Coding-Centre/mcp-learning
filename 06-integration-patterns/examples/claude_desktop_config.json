@@ -1,0 +1,35 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "python",
+      "args": [
+        "/Users/youruser/Desktop/work/mcp-server/05-integration-patterns/examples/github_server.py"
+      ],
+      "env": {
+        "GITHUB_TOKEN": "ghp_your_github_token_here"
+      }
+    },
+    "git": {
+      "command": "python",
+      "args": [
+        "/Users/youruser/Desktop/work/mcp-server/05-integration-patterns/examples/git_server.py"
+      ],
+      "env": {
+        "GIT_REPO_PATH": "/Users/youruser/Desktop/work/my-project"
+      }
+    },
+    "filesystem": {
+      "command": "python",
+      "args": [
+        "/Users/youruser/Desktop/work/mcp-server/04-advanced-features/examples/resource_server.py"
+      ]
+    },
+    "calculator": {
+      "command": "python",
+      "args": [
+        "/Users/youruser/Desktop/work/mcp-server/03-basic-mcp-server/examples/calculator_server.py"
+      ]
+    }
+  }
+}
+

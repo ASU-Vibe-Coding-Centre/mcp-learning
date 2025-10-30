@@ -37,6 +37,12 @@ By completing this module, you will be able to:
    - Use the MCP Inspector to test tool invocations
    - Write basic unit tests for tool functions
 
+6. **Containerize MCP Servers**
+   - Package servers as Docker containers
+   - Create Dockerfiles with best practices
+   - Build and test containerized servers
+   - Publish servers to Docker Hub
+
 ## What You'll Build
 
 Throughout this module, you'll create several progressively complex MCP servers:
@@ -489,7 +495,479 @@ After completing this module, work through `checkpoint.md` to validate your unde
 - Hands-on coding task
 - Self-assessment checklist
 
-You should be able to build a working MCP server with multiple tools independently before moving to Module 04.
+You should be able to build a working MCP server with multiple tools independently before moving to Module 05.
+
+---
+
+## Containerizing Your MCP Servers
+
+Once you've built a working MCP server, the next step is often to package it as a Docker container. This makes your server portable, easy to distribute, and ready for deployment.
+
+### Why Containerize MCP Servers?
+
+**Benefits:**
+- **Portability**: Run anywhere Docker runs (local, cloud, servers)
+- **Consistency**: Same environment on all machines
+- **Isolation**: Dependencies don't conflict with system packages
+- **Distribution**: Easy to share via Docker Hub
+- **Deployment**: Production-ready packaging
+
+**When to containerize:**
+- Sharing servers with others
+- Deploying to production
+- Publishing to Docker MCP Catalog
+- Team collaboration
+- Avoiding dependency conflicts
+
+### Basic Dockerfile for MCP Servers
+
+Here's a template Dockerfile for your MCP servers:
+
+```dockerfile
+# Use official Python slim image
+FROM python:3.11-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements first (for layer caching)
+COPY requirements.txt .
+
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy server code
+COPY server.py .
+
+# Create non-root user for security
+RUN useradd -m -u 1000 mcpuser && \
+    chown -R mcpuser:mcpuser /app
+
+# Switch to non-root user
+USER mcpuser
+
+# Health check (optional but recommended)
+HEALTHCHECK --interval=30s --timeout=3s \
+  CMD python -c "import sys; sys.exit(0)"
+
+# Run the server
+CMD ["python", "server.py"]
+```
+
+### Example: Containerizing the Calculator Server
+
+**Step 1: Create requirements.txt**
+
+```txt
+mcp>=0.1.0
+```
+
+**Step 2: Create Dockerfile**
+
+```dockerfile
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy server code
+COPY calculator_server.py .
+
+# Non-root user
+RUN useradd -m -u 1000 mcpuser
+USER mcpuser
+
+# Run server
+CMD ["python", "calculator_server.py"]
+```
+
+**Step 3: Create .dockerignore**
+
+```
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+*.log
+.git/
+README.md
+tests/
+```
+
+**Step 4: Build the image**
+
+```bash
+# Build the image
+docker build -t mcp-calculator:1.0 .
+
+# Test it
+docker run --rm -i mcp-calculator:1.0
+```
+
+**Step 5: Use with MCP Inspector**
+
+```bash
+npx @modelcontextprotocol/inspector \
+  docker run --rm -i mcp-calculator:1.0
+```
+
+### Multi-Stage Builds for Smaller Images
+
+For production, use multi-stage builds to reduce image size:
+
+```dockerfile
+# Build stage
+FROM python:3.11 as builder
+
+WORKDIR /build
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir --user -r requirements.txt
+
+# Runtime stage
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Copy only the installed packages
+COPY --from=builder /root/.local /home/mcpuser/.local
+
+# Copy server code
+COPY calculator_server.py .
+
+# Create and switch to non-root user
+RUN useradd -m -u 1000 mcpuser && \
+    chown -R mcpuser:mcpuser /app
+USER mcpuser
+
+# Add local bin to PATH
+ENV PATH=/home/mcpuser/.local/bin:$PATH
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s \
+  CMD python -c "import sys; sys.exit(0)"
+
+CMD ["python", "calculator_server.py"]
+```
+
+**Benefits:**
+- Smaller final image (~150MB vs ~1GB)
+- Faster deployment
+- Reduced attack surface
+
+### Environment Variables for Configuration
+
+Make your servers configurable via environment variables:
+
+**server.py:**
+
+```python
+import os
+from mcp.server import Server
+
+# Get configuration from environment
+LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
+MAX_OPERATIONS = int(os.getenv("MAX_OPERATIONS", "100"))
+
+app = Server("calculator-server")
+
+# Use configuration
+import logging
+logging.basicConfig(level=LOG_LEVEL)
+```
+
+**Dockerfile:**
+
+```dockerfile
+# ... other instructions ...
+
+# Set default environment variables
+ENV LOG_LEVEL=INFO
+ENV MAX_OPERATIONS=100
+
+CMD ["python", "server.py"]
+```
+
+**Running with custom config:**
+
+```bash
+docker run --rm -i \
+  -e LOG_LEVEL=DEBUG \
+  -e MAX_OPERATIONS=500 \
+  mcp-calculator:1.0
+```
+
+### Volume Mounts for File Access
+
+If your server needs file access (like the file operations server):
+
+**Running with volume mount:**
+
+```bash
+docker run --rm -i \
+  -v $(pwd)/data:/data \
+  mcp-file-server:1.0
+```
+
+**In Dockerfile, document the expected volume:**
+
+```dockerfile
+# ...other instructions...
+
+# Document volume usage
+LABEL mcp.volumes="/data"
+LABEL mcp.volume.description="Directory for file operations"
+
+CMD ["python", "file_server.py"]
+```
+
+### Best Practices for MCP Server Containers
+
+**1. Use Specific Tags**
+
+```dockerfile
+# Good: Specific version
+FROM python:3.11.7-slim
+
+# Avoid: Generic tag
+FROM python:latest
+```
+
+**2. Minimize Layers**
+
+```dockerfile
+# Good: Combined RUN commands
+RUN apt-get update && apt-get install -y \
+    package1 \
+    package2 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Avoid: Multiple RUN commands
+RUN apt-get update
+RUN apt-get install -y package1
+RUN apt-get install -y package2
+```
+
+**3. Add Labels for Metadata**
+
+```dockerfile
+LABEL org.opencontainers.image.title="Calculator MCP Server"
+LABEL org.opencontainers.image.description="Provides mathematical calculation tools"
+LABEL org.opencontainers.image.version="1.0.0"
+LABEL org.opencontainers.image.authors="your-email@example.com"
+LABEL org.opencontainers.image.source="https://github.com/yourusername/mcp-calculator"
+LABEL mcp.server.name="calculator"
+LABEL mcp.tools="calculate,add,subtract,multiply,divide"
+```
+
+**4. Don't Run as Root**
+
+Always create and use a non-root user:
+
+```dockerfile
+RUN useradd -m -u 1000 mcpuser
+USER mcpuser
+```
+
+**5. Clean Up in Same Layer**
+
+```dockerfile
+RUN pip install --no-cache-dir -r requirements.txt && \
+    rm -rf /root/.cache/pip
+```
+
+### Testing Containerized Servers
+
+**1. Functional Test:**
+
+```bash
+# Build
+docker build -t mcp-calc:test .
+
+# Test with MCP Inspector
+npx @modelcontextprotocol/inspector \
+  docker run --rm -i mcp-calc:test
+
+# Test specific tool
+echo '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"calculate","arguments":{"expression":"2+2"}}}' | \
+  docker run --rm -i mcp-calc:test
+```
+
+**2. Size Check:**
+
+```bash
+docker images mcp-calc:test
+
+# Aim for:
+# - Basic servers: <150MB
+# - Servers with heavy dependencies: <300MB
+```
+
+**3. Security Scan:**
+
+```bash
+docker scan mcp-calc:test
+```
+
+### Publishing to Docker Hub
+
+Once your server is containerized, you can publish it:
+
+**Step 1: Tag for Docker Hub**
+
+```bash
+docker tag mcp-calc:test username/mcp-calculator:1.0.0
+docker tag mcp-calc:test username/mcp-calculator:latest
+```
+
+**Step 2: Push**
+
+```bash
+docker login
+docker push username/mcp-calculator:1.0.0
+docker push username/mcp-calculator:latest
+```
+
+**Step 3: Document Usage**
+
+Create README on Docker Hub with:
+- What the server does
+- Available tools
+- Required environment variables
+- Usage examples
+- Testing instructions
+
+For detailed publishing guide, see [Module 03: Docker MCP Ecosystem](../03-docker-mcp-ecosystem/) and [Challenge 1: Publish Server](../03-docker-mcp-ecosystem/exercises/challenge-1-publish-server.md)
+
+### Docker Compose for Development
+
+Create `docker-compose.yml` for easier development:
+
+```yaml
+version: '3.8'
+
+services:
+  calculator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mcp-calculator-dev
+    volumes:
+      # Mount source for live editing
+      - ./calculator_server.py:/app/calculator_server.py:ro
+    environment:
+      - LOG_LEVEL=DEBUG
+      - MAX_OPERATIONS=1000
+    stdin_open: true
+    tty: true
+
+  # Add more servers as needed
+  file-server:
+    build:
+      context: ./file-server
+    volumes:
+      - ./data:/data
+    stdin_open: true
+    tty: true
+```
+
+**Usage:**
+
+```bash
+# Build all services
+docker compose build
+
+# Run calculator server
+docker compose run --rm calculator
+
+# Run with MCP Inspector
+npx @modelcontextprotocol/inspector \
+  docker compose run --rm calculator
+```
+
+### Example: Complete Containerization Workflow
+
+**1. Project Structure:**
+
+```
+mcp-calculator/
+├── Dockerfile
+├── docker-compose.yml
+├── .dockerignore
+├── requirements.txt
+├── calculator_server.py
+├── README.md
+└── tests/
+    └── test_calculator.py
+```
+
+**2. Build and Test Locally:**
+
+```bash
+docker build -t mcp-calculator:dev .
+docker run --rm -i mcp-calculator:dev
+```
+
+**3. Test with Inspector:**
+
+```bash
+npx @modelcontextprotocol/inspector \
+  docker run --rm -i mcp-calculator:dev
+```
+
+**4. Tag and Publish:**
+
+```bash
+docker tag mcp-calculator:dev username/mcp-calculator:1.0.0
+docker push username/mcp-calculator:1.0.0
+```
+
+**5. Use in Production:**
+
+```bash
+docker pull username/mcp-calculator:1.0.0
+docker run --rm -i username/mcp-calculator:1.0.0
+```
+
+### Quick Reference: Docker Commands for MCP Servers
+
+```bash
+# Build
+docker build -t server-name:tag .
+
+# Run interactively
+docker run --rm -i server-name:tag
+
+# Run with environment variables
+docker run --rm -i -e VAR=value server-name:tag
+
+# Run with volume mount
+docker run --rm -i -v $(pwd)/data:/data server-name:tag
+
+# Test with Inspector
+npx @modelcontextprotocol/inspector docker run --rm -i server-name:tag
+
+# Check size
+docker images server-name:tag
+
+# Inspect image
+docker inspect server-name:tag
+
+# Remove image
+docker rmi server-name:tag
+```
+
+### Learning More
+
+- **Module 03**: [Docker MCP Ecosystem](../03-docker-mcp-ecosystem/) - Complete Docker MCP coverage
+- **Challenge**: [Build and Publish Server](../03-docker-mcp-ecosystem/exercises/challenge-1-publish-server.md) - Hands-on exercise
+- **Module 05**: [Integration Patterns](../05-integration-patterns/) - Advanced deployment patterns
+
+---
 
 ## Next Steps
 
