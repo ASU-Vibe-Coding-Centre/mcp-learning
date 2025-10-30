@@ -337,14 +337,40 @@ A well-configured IDE makes development much faster.
 }
 ```
 
-#### Cursor
+#### Cursor (Primary IDE for This Repository)
 
 **Why Cursor?**
-- AI-native IDE (based on VS Code)
-- Great for learning with AI assistance
-- Familiar VS Code interface
+- AI-native IDE with built-in MCP support
+- Perfect for learning MCP with AI assistance
+- Based on VS Code (familiar interface)
+- Native integration with MCP servers via Cline extension
 
-**Setup**: Same as VS Code (it's a fork)
+**Installation:**
+
+1. Download from [cursor.sh](https://cursor.sh)
+   - Available for macOS, Windows, and Linux
+   - Free with AI features included
+
+2. Install the Cline extension (for MCP support):
+   - Open Cursor
+   - Go to Extensions (Cmd/Ctrl+Shift+X)
+   - Search for "Cline" (formerly Claude Dev)
+   - Click Install
+
+3. Configure MCP servers (covered in Module 06):
+   - Settings will be stored in Cursor's extension storage
+   - Configuration file location varies by OS (see Module 06)
+
+**Extensions to Install:**
+- Cline (required for MCP) - AI assistant with MCP support
+- Python (Microsoft) - Python language support
+- Pylance (Microsoft) - Python type checking
+- Docker (Microsoft) - Docker integration
+
+**Benefits for MCP Development:**
+- Test MCP servers directly in your development environment
+- AI assistance for writing server code
+- Same codebase as VS Code (extensions compatible)
 
 #### JetBrains PyCharm
 
