@@ -21,25 +21,25 @@ Before starting, you should have:
 
 - Completed Module 03 (Basic MCP Server)
 - Completed Module 04 (Advanced Features) recommended
-- Access to Claude Desktop or MCP Inspector
+- Access to Cursor IDE or MCP Inspector
 - Understanding of the example servers (GitHub, Git)
 
 ---
 
 ## Part 1: Configuration & Setup
 
-### Question 1: Claude Desktop Config
+### Question 1: Cursor IDE Config
 
-**Q:** Where is the Claude Desktop configuration file located on your system?
+**Q:** Where is the Cursor IDE configuration file located on your system?
 
 <details>
 <summary>Click to reveal answer</summary>
 
 **Location depends on OS:**
 
-- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
-- **Linux**: `~/.config/Claude/claude_desktop_config.json`
+- **macOS**: `~/Library/Application Support/Cursor/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json`
+- **Windows**: `%APPDATA%\Cursor\User\globalStorage\saoudrizwan.claude-dev\settings\cline_mcp_settings.json`
+- **Linux**: `~/.config/Cursor/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json`
 
 **Note:** You may need to create this file if it doesn't exist.
 </details>
@@ -132,7 +132,7 @@ mcp-inspector python my_server.py
 
 ### Question 5: Common Connection Issues
 
-**Q:** Your server starts successfully but doesn't appear in Claude Desktop. What should you check?
+**Q:** Your server starts successfully but doesn't appear in Cursor IDE. What should you check?
 
 <details>
 <summary>Click to reveal answer</summary>
@@ -145,7 +145,7 @@ mcp-inspector python my_server.py
 4. **Command**: Is the command available in PATH?
 5. **Permissions**: Can the file be executed?
 6. **Restart Claude**: Did you restart after config changes?
-7. **Logs**: Check Claude Desktop logs for errors
+7. **Logs**: Check Cursor IDE logs for errors
 
 **Common mistakes:**
 ```json
@@ -473,7 +473,7 @@ Create a complete integration that demonstrates all concepts learned.
 
 ### Exercise: Multi-Server Setup
 
-**Objective:** Configure and test a multi-server setup with Claude Desktop.
+**Objective:** Configure and test a multi-server setup with Cursor IDE.
 
 **Requirements:**
 
@@ -491,7 +491,7 @@ Create a complete integration that demonstrates all concepts learned.
 3. **Test Each Server:**
    - Verify each server starts independently with Inspector
    - Test key tools from each server
-   - Confirm all servers work together in Claude Desktop
+   - Confirm all servers work together in Cursor IDE
 
 4. **Document:**
    - Configuration file location
@@ -502,7 +502,7 @@ Create a complete integration that demonstrates all concepts learned.
 **Success Criteria:**
 
 - [ ] Configuration file is valid JSON
-- [ ] All three servers appear in Claude Desktop
+- [ ] All three servers appear in Cursor IDE
 - [ ] Can successfully call tools from each server
 - [ ] Servers don't interfere with each other
 - [ ] Error messages are clear and helpful
@@ -529,7 +529,7 @@ Debug these common issues:
 }
 ```
 
-**Q:** Server configured but not appearing in Claude Desktop. Why?
+**Q:** Server configured but not appearing in Cursor IDE. Why?
 
 <details>
 <summary>Click to reveal answer</summary>
@@ -544,7 +544,7 @@ Debug these common issues:
 ```
 
 **Also check:**
-- Did you restart Claude Desktop?
+- Did you restart Cursor IDE?
 - Does the file exist at that path?
 - Is python in PATH?
 - Are there syntax errors in the config JSON?
@@ -643,7 +643,7 @@ if not limiter.is_allowed():
 Rate your confidence (1-5, where 5 is very confident):
 
 ### Configuration
-- [ ] I can configure Claude Desktop for MCP servers
+- [ ] I can configure Cursor IDE for MCP servers
 - [ ] I understand environment variable usage
 - [ ] I can debug configuration issues
 - [ ] I know where to find logs and errors
@@ -676,7 +676,7 @@ Rate your confidence (1-5, where 5 is very confident):
 
 Ensure you can:
 
-1. **Configure servers** in Claude Desktop successfully
+1. **Configure servers** in Cursor IDE successfully
 2. **Debug issues** using Inspector and logs
 3. **Implement integrations** with external APIs
 4. **Design** multi-server architectures
@@ -690,7 +690,7 @@ Build a complete integration:
 2. Build an MCP server for it
 3. Add authentication, caching, rate limiting
 4. Test with Inspector
-5. Deploy to Claude Desktop
+5. Deploy to Cursor IDE
 6. Use it for real tasks
 
 ### Module 06 Preview
@@ -713,7 +713,7 @@ Once you've successfully:
 - ✓ Completed the practical exercise
 - ✓ Debugged all scenarios
 - ✓ Rated yourself 3+ on all self-assessment items
-- ✓ Tested servers with Claude Desktop or Inspector
+- ✓ Tested servers with Cursor IDE or Inspector
 
 **You're ready for Module 06: Security & Best Practices!**
 

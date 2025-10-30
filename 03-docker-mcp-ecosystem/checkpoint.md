@@ -116,7 +116,7 @@ Complete these practical exercises to prove your skills:
 - [ ] Server installed from Docker MCP Catalog
 - [ ] Required environment variables configured
 - [ ] Server status shows "Running"
-- [ ] Connected to an AI client (Claude Desktop, Cursor, etc.)
+- [ ] Connected to an AI client (Cursor IDE, Cursor, etc.)
 - [ ] Successfully tested at least 2 tools provided by the server
 
 **Validation Questions:**
@@ -193,7 +193,7 @@ Test your deeper understanding:
 
 **Architecture:**
 ```
-Claude Desktop
+Cursor IDE
      │
      └─→ MCP Gateway (localhost:3000)
             ├─→ mcp/git (local)
@@ -204,7 +204,7 @@ Claude Desktop
 ```
 
 **Use Gateway because:**
-- Single configuration in Claude Desktop
+- Single configuration in Cursor IDE
 - Centralized secret management (GitHub token, Slack token, DB credentials)
 - Unified logging of all tool calls
 - Easy to add/remove servers
@@ -299,7 +299,7 @@ docker pull company-registry.com/mcp/crm-server:1.0.0
    - Does token have correct permissions (repo, read:org)?
 
 3. **Client Connection**
-   - Is Claude Desktop connected to Gateway?
+   - Is Cursor IDE connected to Gateway?
    - Did they restart Claude after setup?
    - Can they see other MCP servers?
 
@@ -343,7 +343,7 @@ Missing or invalid GITHUB_TOKEN. The server requires a personal access token wit
 1. Generate GitHub personal access token
 2. Add as secret in MCP Toolkit
 3. Restart mcp/github server
-4. Restart Claude Desktop
+4. Restart Cursor IDE
 
 </details>
 

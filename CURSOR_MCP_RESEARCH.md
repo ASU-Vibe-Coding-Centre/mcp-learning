@@ -60,7 +60,7 @@ Based on the Cursor MCP documentation, the configuration format is:
 
 ## Differences from Standard MCP Client Configuration
 
-**Similarities with Claude Desktop:**
+**Similarities with Cursor IDE:**
 - Same JSON structure (`mcpServers` object)
 - Same field names (`command`, `args`, `env`)
 - Same transport mechanism (stdio by default)
@@ -226,7 +226,7 @@ if __name__ == "__main__":
 
 ### Example Use Cases for Cursor
 
-**Instead of (Claude Desktop - General):**
+**Instead of (Cursor IDE - General):**
 - "Summarize this email"
 - "Help me plan my day"
 - "Translate this text"
@@ -306,7 +306,7 @@ if __name__ == "__main__":
 ### Priority Updates
 
 1. **High Priority:**
-   - Configuration file paths (different from Claude Desktop)
+   - Configuration file paths (different from Cursor IDE)
    - Example configurations (same format, different location)
    - UI/UX references (Cline extension, not standalone app)
    - Installation instructions (extension + Cursor)
@@ -324,8 +324,8 @@ if __name__ == "__main__":
 ### Text Replacement Strategy
 
 **Safe Replacements:**
-- "Claude Desktop" → "Cursor IDE"
-- "Claude Desktop app" → "Cursor IDE with Cline extension"
+- "Cursor IDE" → "Cursor IDE"
+- "Cursor IDE app" → "Cursor IDE with Cline extension"
 - "Claude's interface" → "Cline's interface"
 
 **Context-Dependent:**
@@ -338,7 +338,7 @@ if __name__ == "__main__":
 ## Summary
 
 **Key Findings:**
-1. Configuration format is identical to Claude Desktop
+1. Configuration format is identical to Cursor IDE
 2. File location is different (extension storage vs app support)
 3. Requires Cline extension to be installed
 4. Access through Cline chat interface

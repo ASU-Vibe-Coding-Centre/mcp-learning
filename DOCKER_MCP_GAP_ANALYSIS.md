@@ -65,7 +65,7 @@ The current MCP learning repository focuses on **building custom MCP servers fro
 
 **Should Include:**
 - Using Docker Desktop's MCP Toolkit UI
-- Configuring MCP Toolkit for Claude Desktop, Cursor, Continue.dev
+- Configuring MCP Toolkit for Cursor IDE, Cursor, Continue.dev
 - Managing secrets through the Toolkit
 - Enabling/disabling MCP servers via GUI
 - Understanding the Toolkit as MCP server aggregator
@@ -185,7 +185,7 @@ The current MCP learning repository focuses on **building custom MCP servers fro
 - GUI-based workflows
 
 **Current Implementation:**
-- Claude Desktop integration (stdio only)
+- Cursor IDE integration (stdio only)
 - Manual configuration files
 - Command-line focused
 
@@ -298,7 +298,7 @@ Add section:
 - Installing Docker Desktop
 - Accessing MCP Toolkit
 - Configuring first catalog server
-- Connecting to Claude Desktop via Toolkit
+- Connecting to Cursor IDE via Toolkit
 
 ### New Module: Docker MCP in Practice
 
@@ -339,7 +339,7 @@ Update to include:
 1. Learn MCP concepts
 2. Set up Python environment
 3. Build custom servers from scratch
-4. Test locally with Claude Desktop
+4. Test locally with Cursor IDE
 
 ### Recommended Path
 1. Learn MCP concepts **+ Docker MCP ecosystem**

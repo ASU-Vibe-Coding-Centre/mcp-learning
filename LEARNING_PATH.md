@@ -173,7 +173,7 @@ This guide helps you navigate the MCP Server Learning Repository based on your g
 **Focus:** Real-World Connections
 
 **What You'll Learn:**
-- Integrating with Claude Desktop
+- Integrating with Cursor IDE
 - Using MCP Inspector for debugging
 - Multi-server scenarios and composition
 - Docker Toolkit and Gateway integration
@@ -191,7 +191,7 @@ This guide helps you navigate the MCP Server Learning Repository based on your g
 **Outcome:** Connect MCP servers to real AI applications and external services
 
 **Exercises:**
-- Tutorial 1: Claude Desktop integration
+- Tutorial 1: Cursor IDE integration
 - Tutorial 2: GitHub API operations
 - Challenge: Multi-server architecture
 - Challenge: Custom API integration
@@ -409,7 +409,7 @@ This guide helps you navigate the MCP Server Learning Repository based on your g
 - Resource and prompt template design
 - Real-world API integrations
 - Multi-server architectures
-- Claude Desktop integration
+- Cursor IDE integration
 - Docker Gateway orchestration
 
 ---
@@ -518,7 +518,7 @@ Use these to verify your progress:
 - [ ] Created prompt templates
 
 **After Module 06:**
-- [ ] Connected server to Claude Desktop or MCP client
+- [ ] Connected server to Cursor IDE or MCP client
 - [ ] Integrated with external API
 - [ ] Understand multi-server patterns
 - [ ] Configured Docker Gateway (optional)
@@ -567,7 +567,7 @@ Use these to verify your progress:
 1. **Build a Real Integration**
    - Choose a service or API you use
    - Build an MCP server for it
-   - Deploy and use it with Claude Desktop
+   - Deploy and use it with Cursor IDE
 
 2. **Contribute to the Community**
    - Share your MCP server on GitHub

@@ -365,7 +365,7 @@ services:
       API_KEY: ${API_KEY}
 \`\`\`
 
-### With Claude Desktop
+### With Cursor IDE
 
 \`\`\`json
 {
@@ -475,7 +475,7 @@ npx @modelcontextprotocol/inspector \
 
 #### 5.3 Test with AI Client
 
-Add to Claude Desktop config and test all tools.
+Add to Cursor IDE config and test all tools.
 
 ---
 

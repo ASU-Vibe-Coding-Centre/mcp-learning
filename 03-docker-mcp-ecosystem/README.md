@@ -490,7 +490,7 @@ The Docker MCP Toolkit is integrated into Docker Desktop and provides a comprehe
 │                                                           │
 │  ┌─────────────────────────────────────────────────────┐ │
 │  │           Client Configuration                       │ │
-│  │  • Claude Desktop                                    │ │
+│  │  • Cursor IDE                                    │ │
 │  │  • Cursor                                            │ │
 │  │  • Continue.dev                                      │ │
 │  │  • Gordon                                            │ │
@@ -652,7 +652,7 @@ Status: Running ✓
 **Step 6: Connect Client**
 ```
 Client Configuration →
-  Claude Desktop →
+  Cursor IDE →
     Status: Connected ✓
     Endpoint: http://localhost:3000/mcp
     
@@ -663,7 +663,7 @@ Client Configuration →
 
 **Step 7: Test**
 ```
-Open Claude Desktop
+Open Cursor IDE
 Ask: "Search my GitHub repos for TODO comments"
 GitHub server tools are now available!
 ```
@@ -998,7 +998,7 @@ curl http://localhost:3000/health
 
 **Option 1: Direct Connection (Single Server)**
 
-Create Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
+Create Cursor IDE config (`~/Library/Application Support/Cursor/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json` on macOS):
 
 ```json
 {
@@ -1533,7 +1533,7 @@ curl http://localhost:3000/health
 }
 ```
 
-Now Claude Desktop connects to Gateway, which provides access to all configured servers.
+Now Cursor IDE connects to Gateway, which provides access to all configured servers.
 
 ### Gateway Use Cases
 
@@ -1989,7 +1989,7 @@ See the [exercises](./exercises/) directory for hands-on practice:
 ### Practice Projects
 
 **Beginner:**
-- Use 3 catalog servers with Claude Desktop
+- Use 3 catalog servers with Cursor IDE
 - Set up Gateway for local development
 - Create documentation for your server setup
 

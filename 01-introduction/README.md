@@ -104,7 +104,7 @@ MCP follows a client-server architecture with clear separation of concerns.
 - Receives and processes responses
 - Handles capability negotiation
 
-**You typically don't build the client** - it's provided by platforms like Claude Desktop or other MCP-compatible applications.
+**You typically don't build the client** - it's provided by platforms like Cursor IDE or other MCP-compatible applications.
 
 #### 2. MCP Server
 - Exposes capabilities (tools, resources, prompts) to clients

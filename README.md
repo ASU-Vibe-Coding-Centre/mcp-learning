@@ -74,13 +74,13 @@ MCP provides a **standardized protocol** that defines:
 3. **How to provide prompts** as reusable templates
 4. **How to communicate** between AI applications and external systems
 
-With MCP, you build a server once, and it can work with any MCP-compatible AI application—Claude Desktop, custom chatbots, AI agents, and more.
+With MCP, you build a server once, and it can work with any MCP-compatible AI application—Cursor IDE, custom chatbots, AI agents, and more.
 
 ### Core Concept
 
 MCP follows a **client-server architecture**:
 
-- **MCP Clients** live inside AI applications (like Claude Desktop) and communicate with servers
+- **MCP Clients** live inside AI applications (like Cursor IDE) and communicate with servers
 - **MCP Servers** expose tools, data, and functionality to AI models
 - **Communication** happens via JSON-RPC 2.0 over standard transport layers (stdio or HTTP)
 
@@ -180,7 +180,7 @@ The **Docker MCP Toolkit** is integrated into Docker Desktop and provides a **GU
 - Automatic container lifecycle management
 
 **Cross-LLM Compatibility**
-- Works with Claude Desktop, Cursor, Continue.dev, Gordon
+- Works with Cursor IDE, Cursor, Continue.dev, Gordon
 - Single configuration works across all clients
 - Unified endpoint for all your MCP servers
 
@@ -217,7 +217,7 @@ The **Docker MCP Toolkit** is integrated into Docker Desktop and provides a **GU
 │                                                        │
 │  ┌──────────────────────────────────────────────────┐ │
 │  │  Client Configuration                             │ │
-│  │  • Claude Desktop: Connected                      │ │
+│  │  • Cursor IDE: Connected                      │ │
 │  │  • Cursor: Connected                              │ │
 │  │  • Continue.dev: Not configured                   │ │
 │  └──────────────────────────────────────────────────┘ │
@@ -364,7 +364,7 @@ E2B Sandboxes now include **direct access to the Docker MCP Catalog**, providing
 
 4. **Connect to Client**
    - Go to Client Configuration
-   - Select Claude Desktop, Cursor, or your client
+   - Select Cursor IDE, Cursor, or your client
    - Follow connection instructions
 
 5. **Start Using**
@@ -438,7 +438,7 @@ MCP is built on a **layered architecture** that separates concerns and enables f
 ```
 ┌────────────────────────────────────────────────────-─────────┐
 │                        AI Application                        │
-│                     (e.g., Claude Desktop)                   │
+│                     (e.g., Cursor IDE)                   │
 │  ┌──────────────────────────────────────────────────-──────┐ │
 │  │                      MCP Host                           │ │
 │  │  - Manages client lifecycles                            │ │
@@ -621,7 +621,7 @@ MCP represents a fundamental shift in how we build AI integrations. Here's why i
 #### **1. Write Once, Use Everywhere**
 
 Build an MCP server once, and it works with any MCP-compatible client:
-- Connect to Claude Desktop today
+- Connect to Cursor IDE today
 - Use with custom AI applications tomorrow
 - Compatible with future MCP-enabled tools automatically
 
@@ -1188,7 +1188,7 @@ Any editor works, but we recommend:
 - Official testing tool from Anthropic
 - We'll cover installation in Module 02
 
-**Claude Desktop** (for real integrations)
+**Cursor IDE** (for real integrations)
 - To test your MCP servers with actual AI
 - Download from: [claude.ai/download](https://claude.ai/download)
 
@@ -1278,7 +1278,7 @@ This repository is organized into 7 progressive modules, from fundamental concep
 
 **Testing & Debugging**
 - [MCP Inspector](https://github.com/modelcontextprotocol/inspector) - Official testing tool
-- [Claude Desktop](https://claude.ai/download) - AI application with MCP support
+- [Cursor IDE](https://claude.ai/download) - AI application with MCP support
 
 ### Learning Resources
 

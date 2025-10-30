@@ -70,7 +70,7 @@ The Gateway is now automatically managing all servers you've enabled in the Tool
 
 ### 2.2 Configure AI Client
 
-Update your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
+Update your Cursor IDE config (`~/Library/Application Support/Cursor/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json` on macOS):
 
 ```json
 {
@@ -84,7 +84,7 @@ Update your Claude Desktop config (`~/Library/Application Support/Claude/claude_
 
 ### 2.3 Verify Connection
 
-1. Restart Claude Desktop
+1. Restart Cursor IDE
 2. Check connection status in Docker Desktop MCP Toolkit
 3. Ask Claude: "What MCP tools are available?"
 4. Claude should list tools from all enabled servers
@@ -261,9 +261,9 @@ curl http://localhost:3000/mcp/servers
 
 ## Part 4: Configure AI Clients
 
-### 4.1 Claude Desktop Configuration
+### 4.1 Cursor IDE Configuration
 
-Create or update `~/Library/Application Support/Claude/claude_desktop_config.json`:
+Create or update `~/Library/Application Support/Cursor/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json`:
 
 ```json
 {
@@ -293,7 +293,7 @@ Add to Cursor settings:
 
 ### 4.3 Restart Clients
 
-1. Quit and restart Claude Desktop
+1. Quit and restart Cursor IDE
 2. Restart Cursor
 3. Verify connection in client logs
 
@@ -303,7 +303,7 @@ Add to Cursor settings:
 
 ### 5.1 Test Tool Discovery
 
-In Claude Desktop or Cursor, ask:
+In Cursor IDE or Cursor, ask:
 
 ```
 What MCP tools are available?

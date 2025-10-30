@@ -150,10 +150,10 @@ async def call_tool(name: str, arguments: dict):
 
 **MCP**:
 - Protocol-based: any client can use any MCP server
-- Tools work with Claude, Claude Desktop, or any MCP-compatible client
+- Tools work with Claude, Cursor IDE, or any MCP-compatible client
 - No rewriting needed to switch AI platforms
 
-**Example Scenario**: You build tools in LangChain for GPT-4. Later, you want to use Claude Desktop. With LangChain, you'd need to adapt your tools. With MCP, Claude Desktop can immediately use your existing MCP servers.
+**Example Scenario**: You build tools in LangChain for GPT-4. Later, you want to use Cursor IDE. With LangChain, you'd need to adapt your tools. With MCP, Cursor IDE can immediately use your existing MCP servers.
 
 #### 4. Complexity & Learning Curve
 
@@ -204,7 +204,7 @@ async def call_tool(name: str, arguments: dict):
 - Growing ecosystem
 - Anthropic-backed standard
 - Increasing adoption by AI platforms
-- Official Claude Desktop support
+- Official Cursor IDE support
 
 ### When to Choose Which?
 
@@ -609,7 +609,7 @@ Score each criterion (1-5, 5 being most important for your project):
 ### Use Case 4: Multi-Platform AI Tools
 
 **Requirements**:
-- Tools work with Claude Desktop
+- Tools work with Cursor IDE
 - Tools work with custom GPT applications
 - Tools work with enterprise AI platform
 - Database and API integrations

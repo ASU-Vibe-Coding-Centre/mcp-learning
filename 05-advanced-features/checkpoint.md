@@ -717,7 +717,7 @@ If you need more practice:
 
 Next, you'll learn:
 
-- Integrating with Claude Desktop
+- Integrating with Cursor IDE
 - Using MCP Inspector for debugging
 - Real-world patterns (GitHub, Git, APIs)
 - Multi-server architectures

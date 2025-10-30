@@ -415,7 +415,7 @@ Please be constructive and specific in your feedback.
   - Local application, local server
   - Simple to implement
   - No network configuration
-  - Matches Claude Desktop architecture
+  - Matches Cursor IDE architecture
 
 ---
 

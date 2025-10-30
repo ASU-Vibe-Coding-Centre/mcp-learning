@@ -11,7 +11,7 @@ By completing this tutorial, you will:
 3. Handle API rate limits and errors gracefully
 4. Build tools for listing, creating, and managing GitHub issues
 5. Test API integrations with real services
-6. Deploy an API-backed server to Claude Desktop
+6. Deploy an API-backed server to Cursor IDE
 
 ## Time Estimate
 
@@ -22,7 +22,7 @@ By completing this tutorial, you will:
 Before starting, ensure you have:
 
 - Completed Module 03 (Basic MCP Server)
-- Completed Tutorial 1 (Claude Desktop Integration) recommended
+- Completed Tutorial 1 (Cursor IDE Integration) recommended
 - GitHub account (free tier is fine)
 - Basic understanding of REST APIs
 - `requests` library installed: `pip install requests`
@@ -695,9 +695,9 @@ Try each tool:
 3. **Get Issue**: `{"owner": "microsoft", "repo": "vscode", "issue_number": 1}`
 4. **Create Issue**: Only on your own test repo!
 
-## Step 11: Deploy to Claude Desktop
+## Step 11: Deploy to Cursor IDE
 
-Now integrate your server with Claude Desktop!
+Now integrate your server with Cursor IDE!
 
 Edit `claude_desktop_config.json`:
 
@@ -719,10 +719,10 @@ Edit `claude_desktop_config.json`:
 
 ```bash
 # macOS/Linux - Restrict access
-chmod 600 ~/Library/Application\ Support/Claude/claude_desktop_config.json
+chmod 600 ~/Library/Application\ Support/Cursor/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json
 ```
 
-Restart Claude Desktop and try:
+Restart Cursor IDE and try:
 
 - "Can you list the open issues in microsoft/vscode?"
 - "Search for bugs in the vscode repository"
@@ -872,7 +872,7 @@ echo $GITHUB_TOKEN
 - [ ] `get_issue` retrieves issue details
 - [ ] `search_issues` finds relevant issues
 - [ ] Errors are handled gracefully
-- [ ] Server integrates with Claude Desktop
+- [ ] Server integrates with Cursor IDE
 - [ ] Token is stored securely (not in code)
 
 ## What You've Learned
@@ -883,7 +883,7 @@ Congratulations! You've built a production-ready API integration. You now unders
 2. **Authentication**: Secure token management and headers
 3. **Error Handling**: Converting API errors to user-friendly messages
 4. **Rate Limiting**: Respecting API constraints
-5. **Real-World Deployment**: Using your server with Claude Desktop
+5. **Real-World Deployment**: Using your server with Cursor IDE
 6. **Best Practices**: Security, testing, and user experience
 
 ## Next Steps

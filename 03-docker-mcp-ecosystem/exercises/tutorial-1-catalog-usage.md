@@ -12,7 +12,7 @@ By the end of this tutorial, you will:
 - Browse the Docker MCP Catalog
 - Install a pre-built MCP server
 - Configure environment variables and secrets
-- Connect a catalog server to Claude Desktop
+- Connect a catalog server to Cursor IDE
 - Test tools provided by the server
 
 ---
@@ -168,26 +168,26 @@ We'll use the `mcp/filesystem` server as an example - it provides tools for read
 
 ---
 
-## Step 6: Connect to Claude Desktop
+## Step 6: Connect to Cursor IDE
 
-Now let's connect this server to Claude Desktop so the AI can use it.
+Now let's connect this server to Cursor IDE so the AI can use it.
 
 1. **In Docker MCP Toolkit, Go to Client Configuration**
    - Look for "Clients" or "Client Configuration" section
-   - Select "Claude Desktop"
+   - Select "Cursor IDE"
 
 2. **Enable Connection**
-   - Toggle "Enable" for Claude Desktop
+   - Toggle "Enable" for Cursor IDE
    - The toolkit will show the connection endpoint
    - Usually: `http://localhost:3000/mcp`
 
 3. **Verify Configuration Was Created**
-   - Toolkit should indicate "Claude Desktop: Connected"
+   - Toolkit should indicate "Cursor IDE: Connected"
    - Configuration file is automatically created at:
-     - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
-     - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+     - macOS: `~/Library/Application Support/Cursor/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json`
+     - Windows: `%APPDATA%\Cursor\User\globalStorage\saoudrizwan.claude-dev\settings\cline_mcp_settings.json`
 
-**Expected Result:** Claude Desktop is connected to the MCP Gateway.
+**Expected Result:** Cursor IDE is connected to the MCP Gateway.
 
 **Alternative Manual Configuration:**
 
@@ -205,10 +205,10 @@ If automatic configuration doesn't work, create/edit the file manually:
 
 ---
 
-## Step 7: Test in Claude Desktop
+## Step 7: Test in Cursor IDE
 
-1. **Launch Claude Desktop**
-   - Start or restart Claude Desktop application
+1. **Launch Cursor IDE**
+   - Start or restart Cursor IDE application
    - Wait for it to fully load
 
 2. **Verify Server is Connected**
@@ -297,7 +297,7 @@ When you're done testing:
 3. **Restart Server**
    - Toggle back to "Enabled"
    - Server starts with saved configuration
-   - Claude Desktop reconnects automatically
+   - Cursor IDE reconnects automatically
 
 ---
 
@@ -306,7 +306,7 @@ When you're done testing:
 - **Catalog Navigation:** How to find and review MCP servers
 - **Installation:** Pulling Docker images for MCP servers
 - **Configuration:** Setting environment variables and secrets
-- **Client Integration:** Connecting servers to Claude Desktop via Gateway
+- **Client Integration:** Connecting servers to Cursor IDE via Gateway
 - **Testing:** Verifying tools work correctly
 - **Management:** Starting, stopping, and monitoring servers
 
@@ -360,7 +360,7 @@ Answer these to verify your understanding:
 3. **What's the role of the MCP Gateway in this setup?**
    <details>
    <summary>Answer</summary>
-   The Gateway aggregates all MCP servers into a single endpoint. Claude Desktop connects to the Gateway, which routes tool calls to the appropriate servers. This means you only configure one connection in Claude, not one per server.
+   The Gateway aggregates all MCP servers into a single endpoint. Cursor IDE connects to the Gateway, which routes tool calls to the appropriate servers. This means you only configure one connection in Claude, not one per server.
    </details>
 
 4. **If a server won't start, where should you look first?**
@@ -391,8 +391,8 @@ Answer these to verify your understanding:
 **Solutions:**
 1. Verify server status is "Running" in toolkit
 2. Check Client Configuration shows Claude as "Connected"
-3. Restart Claude Desktop application
-4. Check Claude Desktop config file exists and has correct endpoint
+3. Restart Cursor IDE application
+4. Check Cursor IDE config file exists and has correct endpoint
 5. Try asking explicitly: "What MCP tools do you have access to?"
 
 ### Permission Errors
@@ -423,7 +423,7 @@ You've successfully:
 - ✅ Browsed the Docker MCP Catalog
 - ✅ Installed your first MCP server
 - ✅ Configured environment variables
-- ✅ Connected to Claude Desktop via Gateway
+- ✅ Connected to Cursor IDE via Gateway
 - ✅ Tested tools in a real AI application
 
 **Time Invested:** ~30-40 minutes  

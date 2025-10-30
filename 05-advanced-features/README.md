@@ -703,7 +703,7 @@ After completing this module, work through `checkpoint.md` to validate your unde
 After mastering advanced features, you'll move to:
 
 **Module 05: Integration Patterns**
-- Connecting to Claude Desktop
+- Connecting to Cursor IDE
 - Using MCP Inspector for debugging
 - Real-world integration examples (GitHub, Git, APIs)
 - Multi-server architectures

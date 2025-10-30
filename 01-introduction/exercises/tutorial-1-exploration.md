@@ -31,7 +31,7 @@ Imagine you're building an AI assistant that needs to:
 **Questions:**
 
 1. **Without MCP**, list at least 3 challenges you would face in building this assistant to work with:
-   - Claude Desktop
+   - Cursor IDE
    - A custom GPT-4 application
    - An enterprise AI platform
 

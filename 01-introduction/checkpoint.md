@@ -104,7 +104,7 @@ True or False (and explain why):
 
 **Self-Check Answers**:
 1. True - The client runs alongside/within the AI model
-2. False - Clients are provided by platforms (Claude Desktop, etc.)
+2. False - Clients are provided by platforms (Cursor IDE, etc.)
 3. False - Depends on transport; HTTP can support multiple clients
 4. False - Depends on transport; HTTP allows remote servers
 
@@ -149,7 +149,7 @@ Given this tool call, write the JSON-RPC request and response:
 
 For each scenario, choose the best transport (stdio, HTTP+SSE, or WebSockets):
 
-**Scenario A**: Claude Desktop extension
+**Scenario A**: Cursor IDE extension
 - **Your choice**: 
 - **Why**: 
 

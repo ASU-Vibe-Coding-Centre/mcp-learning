@@ -76,7 +76,7 @@ Each message is a single line of JSON followed by a newline:
 **Use Cases**:
 - Local development tools
 - IDE integrations
-- Desktop applications like Claude Desktop
+- Desktop applications like Cursor IDE
 
 **Example Implementation**:
 ```python

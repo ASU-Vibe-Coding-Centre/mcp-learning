@@ -190,7 +190,7 @@ You've successfully run your first MCP server! Here's what to do next:
 
 3. **Test Your Server Properly**
    - Install and use MCP Inspector (covered in Module 04)
-   - Connect to Claude Desktop (covered in Module 06)
+   - Connect to Cursor IDE (covered in Module 06)
    - Write tests for your server (covered in Module 08)
 
 4. **Build Your Own Server**

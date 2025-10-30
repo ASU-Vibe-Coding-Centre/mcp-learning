@@ -6,7 +6,7 @@ Welcome to real-world MCP integration. In this module, you'll learn how to conne
 
 Building MCP servers is one thing - integrating them into real applications is another. This module bridges the gap between development and deployment, showing you how to:
 
-- Connect servers to Claude Desktop and other MCP clients
+- Connect servers to Cursor IDE and other MCP clients
 - Use MCP Inspector for effective debugging
 - Implement real-world integration patterns
 - Design multi-server architectures
@@ -18,8 +18,8 @@ By the end of this module, you'll be able to deploy MCP servers that work seamle
 
 By completing this module, you will be able to:
 
-1. **Integrate with Claude Desktop**
-   - Configure MCP servers in Claude Desktop
+1. **Integrate with Cursor IDE**
+   - Configure MCP servers in Cursor IDE
    - Test server functionality with real AI interactions
    - Debug connection and communication issues
    - Optimize performance for desktop integration
@@ -73,27 +73,27 @@ Before starting this module, ensure you have:
 
 ### Core Integration Concepts
 
-#### 1. Claude Desktop Integration
+#### 1. Cursor IDE Integration
 
-**What is Claude Desktop?**
+**What is Cursor IDE?**
 
-Claude Desktop is Anthropic's AI assistant application that supports MCP. It's one of the primary ways users interact with MCP servers.
+Cursor IDE is Anthropic's AI assistant application that supports MCP. It's one of the primary ways users interact with MCP servers.
 
 **Integration Flow:**
 
 ```
-User ─> Claude Desktop ─> MCP Client ─> Your MCP Server ─> External System
+User ─> Cursor IDE ─> MCP Client ─> Your MCP Server ─> External System
             (AI)           (Protocol)      (Your Code)      (API/DB/Files)
 ```
 
 **Configuration:**
 
-Claude Desktop uses a JSON configuration file to discover and launch MCP servers:
+Cursor IDE uses a JSON configuration file to discover and launch MCP servers:
 
 **Location:**
-- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
-- **Linux**: `~/.config/Claude/claude_desktop_config.json`
+- **macOS**: `~/Library/Application Support/Cursor/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json`
+- **Windows**: `%APPDATA%\Cursor\User\globalStorage\saoudrizwan.claude-dev\settings\cline_mcp_settings.json`
+- **Linux**: `~/.config/Cursor/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json`
 
 **Example Configuration:**
 
@@ -124,7 +124,7 @@ Claude Desktop uses a JSON configuration file to discover and launch MCP servers
 
 **How It Works:**
 
-1. Claude Desktop reads configuration on startup
+1. Cursor IDE reads configuration on startup
 2. Launches each server as a subprocess
 3. Connects via stdio transport
 4. AI can now use your server's tools, resources, and prompts
@@ -175,7 +175,7 @@ mcp-inspector python my_server.py --arg value
 - Debugging protocol issues
 - Validating schemas and responses
 - Performance profiling
-- Before connecting to Claude Desktop
+- Before connecting to Cursor IDE
 
 #### 3. Real-World Integration Patterns
 
@@ -288,7 +288,7 @@ Use separate servers when:
 **Pattern A: Functional Separation**
 
 ```
-User ─> Claude Desktop ─> Git Server (version control)
+User ─> Cursor IDE ─> Git Server (version control)
                       └─> Database Server (data access)
                       └─> API Server (external APIs)
 ```
@@ -298,7 +298,7 @@ Each server handles a distinct domain.
 **Pattern B: Layered Architecture**
 
 ```
-User ─> Claude Desktop ─> Orchestration Server
+User ─> Cursor IDE ─> Orchestration Server
                              ├─> Backend Server
                              ├─> Frontend Server
                              └─> Data Server
@@ -309,7 +309,7 @@ One server coordinates others.
 **Pattern C: Microservices**
 
 ```
-User ─> Claude Desktop ─> User Service Server
+User ─> Cursor IDE ─> User Service Server
                       └─> Order Service Server
                       └─> Notification Service Server
 ```
@@ -524,7 +524,7 @@ async def call_tool(name: str, arguments: dict):
 
 ## Docker-Based Integration Patterns
 
-In addition to direct Claude Desktop integration, you can use Docker's MCP ecosystem for more scalable and production-ready deployments.
+In addition to direct Cursor IDE integration, you can use Docker's MCP ecosystem for more scalable and production-ready deployments.
 
 ### Integration Pattern 1: Docker Desktop with MCP Toolkit
 
@@ -544,13 +544,13 @@ Docker Desktop 4.25+ includes the MCP Toolkit - a GUI for managing MCP servers. 
 
 **Configuration Example:**
 
-Instead of configuring Claude Desktop directly, use the MCP Toolkit:
+Instead of configuring Cursor IDE directly, use the MCP Toolkit:
 
 1. **Open Docker Desktop** → Navigate to MCP section
 2. **Install Servers** from catalog (GitHub, PostgreSQL, etc.)
 3. **Configure** via GUI (API keys, settings)
 4. **Enable** servers
-5. **Connect Claude Desktop** to Gateway endpoint
+5. **Connect Cursor IDE** to Gateway endpoint
 
 **Toolkit generates this configuration automatically:**
 
@@ -672,7 +672,7 @@ docker compose up -d
 **Architecture:**
 
 ```
-AI Client (Claude Desktop)
+AI Client (Cursor IDE)
     │
     └─> Docker MCP Gateway
             ├─> mcp/github (catalog server)
@@ -813,8 +813,8 @@ LOG_LEVEL=WARNING
 **Architecture:**
 
 ```
-Claude Desktop (User 1) ─┐
-Claude Desktop (User 2) ─┼─> Gateway (Load Balancer)
+Cursor IDE (User 1) ─┐
+Cursor IDE (User 2) ─┼─> Gateway (Load Balancer)
 Cursor (User 3) ─────────┘      ├─> Server Instance 1
 Custom App (User 4) ─────────────├─> Server Instance 2
                                  └─> Server Instance 3
@@ -1004,7 +1004,7 @@ services:
 
 ### Comparing Integration Approaches
 
-| Aspect | Direct Claude Desktop | Docker Toolkit | Docker CLI + Gateway |
+| Aspect | Direct Cursor IDE | Docker Toolkit | Docker CLI + Gateway |
 |--------|---------------------|----------------|----------------------|
 | **Setup Complexity** | Low | Very Low | Medium |
 | **Server Discovery** | Manual | GUI Catalog | Manual/Scripted |
@@ -1017,7 +1017,7 @@ services:
 
 ### Migration Path
 
-**Start:** Direct Claude Desktop integration
+**Start:** Direct Cursor IDE integration
 
 ```json
 {
@@ -1035,7 +1035,7 @@ services:
 1. Containerize your server
 2. Install Docker Desktop
 3. Use MCP Toolkit GUI
-4. Connect Claude Desktop to Gateway
+4. Connect Cursor IDE to Gateway
 
 **Scale:** Docker CLI + Gateway (production)
 
@@ -1072,7 +1072,7 @@ services:
 - Test error conditions
 - Check performance
 
-**Step 4: Integrate with Claude Desktop**
+**Step 4: Integrate with Cursor IDE**
 - Add to configuration file
 - Test with real AI interactions
 - Refine based on user experience
@@ -1098,7 +1098,7 @@ config = {
 }
 ```
 
-**Claude Desktop Config:**
+**Cursor IDE Config:**
 ```json
 {
   "mcpServers": {
@@ -1159,7 +1159,7 @@ All example code is in the `examples/` directory:
 - `github_server.py` - GitHub API integration with auth
 - `git_server.py` - Local Git operations
 - `web_scraper_server.py` - Web scraping with BeautifulSoup
-- `claude_desktop_config.json` - Example Claude Desktop configuration
+- `claude_desktop_config.json` - Example Cursor IDE configuration
 
 ## Exercises
 
@@ -1167,7 +1167,7 @@ The `exercises/` directory contains hands-on practice:
 
 ### Tutorials
 
-1. **tutorial-1-claude-integration.md** - Connect server to Claude Desktop
+1. **tutorial-1-claude-integration.md** - Connect server to Cursor IDE
    - Estimated time: 30 minutes
    - Difficulty: Beginner
    - Configure and test your first integration
@@ -1195,7 +1195,7 @@ All exercises include solutions and detailed explanations.
 
 After completing this module, work through `checkpoint.md` to validate your understanding. You should be able to:
 
-- Configure and test MCP servers with Claude Desktop
+- Configure and test MCP servers with Cursor IDE
 - Use MCP Inspector effectively for debugging
 - Build real-world integrations (Git, GitHub, APIs)
 - Design multi-server architectures
@@ -1217,7 +1217,7 @@ After mastering integration patterns, you'll move to:
 
 Throughout your exercises, you can ask questions like:
 
-- "How do I configure Claude Desktop to use my server?"
+- "How do I configure Cursor IDE to use my server?"
 - "Why isn't my server appearing in MCP Inspector?"
 - "How should I handle API rate limits?"
 - "What's the best way to structure multiple servers?"
@@ -1229,7 +1229,7 @@ The example servers demonstrate complete, production-ready implementations with 
 ### Check the Cheat Sheet
 
 See `resources/cheatsheets/mcp-cheatsheet.md` for quick reference on:
-- Claude Desktop configuration
+- Cursor IDE configuration
 - MCP Inspector commands
 - Common integration patterns
 - Debugging techniques
@@ -1238,7 +1238,7 @@ See `resources/cheatsheets/mcp-cheatsheet.md` for quick reference on:
 
 By the end of this module, remember these core principles:
 
-1. **Test Early**: Use Inspector before Claude Desktop
+1. **Test Early**: Use Inspector before Cursor IDE
 2. **Handle Errors**: Comprehensive error handling is critical
 3. **Security First**: Never expose sensitive data
 4. **Log Thoughtfully**: Balance detail with privacy

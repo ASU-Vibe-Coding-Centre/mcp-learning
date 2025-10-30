@@ -1,13 +1,13 @@
-# Tutorial 1: Connecting Your Server to Claude Desktop
+# Tutorial 1: Connecting Your Server to Cursor IDE
 
-Welcome to your first real-world MCP integration! In this tutorial, you'll connect an MCP server to Claude Desktop, enabling Claude to use your tools in live conversations. This is where MCP truly comes to life - giving AI assistants access to your custom capabilities.
+Welcome to your first real-world MCP integration! In this tutorial, you'll connect an MCP server to Cursor IDE, enabling Claude to use your tools in live conversations. This is where MCP truly comes to life - giving AI assistants access to your custom capabilities.
 
 ## Learning Objectives
 
 By completing this tutorial, you will:
 
-1. Understand how Claude Desktop discovers and launches MCP servers
-2. Configure a server in Claude Desktop's settings
+1. Understand how Cursor IDE discovers and launches MCP servers
+2. Configure a server in Cursor IDE's settings
 3. Test server functionality through conversational AI interaction
 4. Debug common integration issues
 5. Verify tools are working correctly in production
@@ -20,22 +20,22 @@ By completing this tutorial, you will:
 
 Before starting, ensure you have:
 
-- **Claude Desktop installed** (download from anthropic.com)
+- **Cursor IDE installed** (download from anthropic.com)
 - **A working MCP server** (we'll use the calculator from Module 03)
 - **Python 3.9+** with MCP SDK installed
 - **Basic understanding** of JSON configuration files
 
-Verify Claude Desktop is installed:
+Verify Cursor IDE is installed:
 
 ```bash
 # macOS
-ls ~/Library/Application\ Support/Claude/
+ls ~/Library/Application\ Support/Cursor/User/globalStorage/saoudrizwan.claude-dev/settings/
 
 # Windows
-dir %APPDATA%\Claude\
+dir %APPDATA%\Cursor\User\globalStorage\saoudrizwan.claude-dev\settings\
 
 # Linux
-ls ~/.config/Claude/
+ls ~/.config/Cursor/User/globalStorage/saoudrizwan.claude-dev/settings/
 ```
 
 You should see Claude's application directory exists.
@@ -44,27 +44,27 @@ You should see Claude's application directory exists.
 
 You'll:
 
-1. Locate Claude Desktop's configuration file
+1. Locate Cursor IDE's configuration file
 2. Add a calculator server to the configuration
-3. Restart Claude Desktop to load the server
+3. Restart Cursor IDE to load the server
 4. Interact with Claude using your server's tools
 5. Verify and debug the integration
 
 By the end, you'll be able to ask Claude to perform calculations using your custom server!
 
-## Overview: How Claude Desktop Integration Works
+## Overview: How Cursor IDE Integration Works
 
 Before diving in, let's understand the architecture:
 
 ```
-You → Claude Desktop → MCP Client → Your Server → Tool Logic
+You → Cursor IDE → MCP Client → Your Server → Tool Logic
       (User Chat)     (Protocol)    (Python)      (Calculator)
 ```
 
 **The Flow:**
 
 1. You configure which servers Claude should use
-2. Claude Desktop launches these servers on startup
+2. Cursor IDE launches these servers on startup
 3. Claude discovers available tools from each server
 4. When you chat, Claude decides when to use tools
 5. Your server receives tool calls and returns results
@@ -82,7 +82,7 @@ Create a file called `calculator_server.py`:
 #!/usr/bin/env python3
 """
 Calculator MCP Server
-Provides basic arithmetic operations for Claude Desktop.
+Provides basic arithmetic operations for Cursor IDE.
 """
 
 import asyncio
@@ -208,9 +208,9 @@ python calculator_server.py
 
 If using Inspector, try calling the `add` tool with `{"a": 5, "b": 3}`. You should get a result.
 
-## Step 2: Locate Claude Desktop Configuration
+## Step 2: Locate Cursor IDE Configuration
 
-Claude Desktop uses a JSON file to configure MCP servers.
+Cursor IDE uses a JSON file to configure MCP servers.
 
 **Find the configuration file location:**
 
@@ -218,30 +218,30 @@ Claude Desktop uses a JSON file to configure MCP servers.
 
 ```bash
 # Configuration file location
-~/Library/Application Support/Claude/claude_desktop_config.json
+~/Library/Application Support/Cursor/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json
 
 # Navigate there
-cd ~/Library/Application\ Support/Claude/
+cd ~/Library/Application\ Support/Cursor/User/globalStorage/saoudrizwan.claude-dev/settings/
 ```
 
 ### Windows
 
 ```powershell
 # Configuration file location
-%APPDATA%\Claude\claude_desktop_config.json
+%APPDATA%\Cursor\User\globalStorage\saoudrizwan.claude-dev\settings\cline_mcp_settings.json
 
 # Navigate there
-cd %APPDATA%\Claude
+cd %APPDATA%\Cursor\User\globalStorage\saoudrizwan.claude-dev\settings
 ```
 
 ### Linux
 
 ```bash
 # Configuration file location
-~/.config/Claude/claude_desktop_config.json
+~/.config/Cursor/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json
 
 # Navigate there
-cd ~/.config/Claude
+cd ~/.config/Cursor/User/globalStorage/saoudrizwan.claude-dev/settings
 ```
 
 **If the file doesn't exist**, create it! This is normal for fresh installations.
@@ -344,20 +344,20 @@ You can configure multiple servers:
 
 For now, **just add the calculator server**.
 
-## Step 4: Restart Claude Desktop
+## Step 4: Restart Cursor IDE
 
-Changes to the configuration file only take effect when Claude Desktop starts.
+Changes to the configuration file only take effect when Cursor IDE starts.
 
-**Restart Claude Desktop:**
+**Restart Cursor IDE:**
 
-1. **Quit Claude Desktop completely** (don't just close the window)
-   - macOS: `Cmd + Q` or Claude Desktop → Quit
+1. **Quit Cursor IDE completely** (don't just close the window)
+   - macOS: `Cmd + Q` or Cursor IDE → Quit
    - Windows: Right-click taskbar icon → Quit
    - Linux: Use your window manager's quit option
 
 2. **Wait a few seconds** for the process to fully terminate
 
-3. **Launch Claude Desktop again**
+3. **Launch Cursor IDE again**
 
 Claude will:
 - Read the configuration file
@@ -367,7 +367,7 @@ Claude will:
 
 **What's Happening Behind the Scenes:**
 
-When Claude Desktop starts, it:
+When Cursor IDE starts, it:
 1. Reads `claude_desktop_config.json`
 2. Spawns `python calculator_server.py` as a subprocess
 3. Sends an initialization request
@@ -380,7 +380,7 @@ Now let's verify Claude can see and use your server!
 
 ### Check Server Status
 
-In Claude Desktop, **look for indicators** that your server loaded:
+In Cursor IDE, **look for indicators** that your server loaded:
 
 - Some versions show MCP server status in settings
 - Check Claude's developer console (if available)
@@ -441,7 +441,7 @@ mcp-inspector python /path/to/calculator_server.py
 
 ### Issue 2: Configuration File Syntax Error
 
-**Symptom:** Claude Desktop won't start or shows an error.
+**Symptom:** Cursor IDE won't start or shows an error.
 
 **Common Mistakes:**
 
@@ -564,10 +564,10 @@ print("Tools registered", file=sys.stderr)
 print(f"Handling tool: {name}", file=sys.stderr)
 ```
 
-Check Claude Desktop's logs:
-- macOS: `~/Library/Logs/Claude/`
-- Windows: `%APPDATA%\Claude\Logs\`
-- Linux: `~/.config/Claude/logs/`
+Check Cursor IDE's logs:
+- macOS: `~/Library/Application Support/Cursor/User/globalStorage/saoudrizwan.claude-dev/logs/`
+- Windows: `%APPDATA%\Cursor\User\globalStorage\saoudrizwan.claude-dev\logs\`
+- Linux: `~/.config/Cursor/User/globalStorage/saoudrizwan.claude-dev/logs/`
 
 ## Step 7: Advanced Configuration
 
@@ -724,7 +724,7 @@ Never hardcode sensitive data in configuration:
 
 1. **Develop** with MCP Inspector
 2. **Test** configuration with simple queries
-3. **Deploy** to Claude Desktop
+3. **Deploy** to Cursor IDE
 4. **Monitor** for issues in real conversations
 
 ## Verification Checklist
@@ -735,7 +735,7 @@ Before moving on, verify:
 - [ ] Server path is correct (full, absolute path)
 - [ ] Python command works from terminal
 - [ ] MCP SDK is installed and accessible
-- [ ] Claude Desktop successfully restarted
+- [ ] Cursor IDE successfully restarted
 - [ ] Claude can discover your tools
 - [ ] Tools respond correctly to requests
 - [ ] Error cases are handled gracefully
@@ -744,7 +744,7 @@ Before moving on, verify:
 
 Congratulations! You now understand:
 
-1. How Claude Desktop discovers and launches MCP servers
+1. How Cursor IDE discovers and launches MCP servers
 2. The configuration file format and location
 3. How to add and configure servers
 4. Testing and debugging integration issues
@@ -771,7 +771,7 @@ Now that you have basic integration working:
 
 ## Additional Resources
 
-- **Claude Desktop Docs**: Official integration guide
+- **Cursor IDE Docs**: Official integration guide
 - **MCP Inspector**: `mcp-inspector python your_server.py`
 - **Example Servers**: Check `05-integration-patterns/examples/`
 - **Module 05 README**: Detailed integration patterns
@@ -785,7 +785,7 @@ Now that you can integrate servers, try this:
    - Converting time zones
    - Calculating time differences
 
-2. Configure it in Claude Desktop
+2. Configure it in Cursor IDE
 
 3. Test by asking Claude:
    - "What time is it in Tokyo?"
@@ -796,12 +796,12 @@ This reinforces the complete cycle: develop → configure → test → use.
 
 ## Summary
 
-You've successfully integrated an MCP server with Claude Desktop! This is a major milestone - you can now give Claude access to any capability you can code. The pattern you learned applies to any server:
+You've successfully integrated an MCP server with Cursor IDE! This is a major milestone - you can now give Claude access to any capability you can code. The pattern you learned applies to any server:
 
 1. Write the server code
 2. Test with Inspector
 3. Configure in `claude_desktop_config.json`
-4. Restart Claude Desktop
+4. Restart Cursor IDE
 5. Verify and debug
 
 This foundation enables endless possibilities: database access, API integrations, file operations, custom business logic, and more.
