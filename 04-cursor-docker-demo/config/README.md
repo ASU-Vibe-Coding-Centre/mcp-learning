@@ -45,36 +45,37 @@ The configuration uses the `mcpServers` object format:
 
 ## Platform Differences
 
-### macOS
+### macOS/Linux
 
-- Docker command: `docker` (typically available in PATH or at `/usr/local/bin/docker`)
 - Configuration file location: `~/.cursor/mcp.json` (workspace-specific) or global settings
+- Docker container must be running on port 3333 before connecting Cursor
 
 ### Windows
 
-- Docker command: `docker.exe` (recommended for explicit path, or use `docker` if in PATH)
-- Docker path examples:
-  - `C:\Program Files\Docker\Docker\resources\bin\docker.exe` (typical installation path)
-  - Or just `docker` if Docker is in your system PATH
 - Configuration file location: `%USERPROFILE%\.cursor\mcp.json` (workspace-specific) or global settings
+- Docker container must be running on port 3333 before connecting Cursor
 
-### Absolute Path Examples
+**Note**: Since we're using HTTP transport, the configuration is the same on all platforms. Just make sure the Docker container is running!
 
-If you need to use an absolute path instead of relying on PATH:
+### Custom Port Examples
 
-**macOS/Windows/Linux:**
+If you need to use a different port (e.g., if 3333 is already in use):
+
+**Using a different port:**
+1. Run container on different port: `docker run -d -p 3334:3333 --name mcp-quick-decision jestercharles/mcp-quick-decision:latest`
+2. Update configuration to use new port:
 ```json
 {
   "mcpServers": {
     "quick-decision-maker": {
       "type": "http",
-      "url": "http://localhost:3333/sse"
+      "url": "http://localhost:3334/sse"
     }
   }
 }
 ```
 
-**Note**: The configuration is the same on all platforms since we're using HTTP transport. Just make sure the Docker container is running with the port mapped.
+**Note**: The `/sse` endpoint path remains the same; only the port changes.
 
 ## Configuration Placement
 
@@ -102,11 +103,16 @@ Note: File names may vary depending on your Cursor version. Check Cursor's MCP s
 1. Copy the appropriate configuration file to your Cursor MCP settings location
 2. Update the Docker image name if using a different tag or local build
 3. Restart Cursor IDE or reload MCP connections
-4. Verify the server appears in Cursor's MCP panel with available tools (flip_coin, roll_dice)
+4. Verify the server appears in Cursor's MCP panel with available tools (make_decision, random_number)
 
 ## Troubleshooting
 
-- **"docker: command not found"**: Ensure Docker is installed and in your PATH, or use an absolute path
+- **Container not running**: Start the container with `docker run -d -p 3333:3333 --name mcp-quick-decision jestercharles/mcp-quick-decision:latest`
+- **Port 3333 already in use**: Use a different port (see Custom Port Examples above)
 - **Container not starting**: Verify the Docker image exists locally (`docker images`) or can be pulled from Docker Hub
-- **Server not appearing in Cursor**: Check that you've restarted Cursor or reloaded MCP connections after adding the configuration
+- **Server not appearing in Cursor**: 
+  - Check that the Docker container is running: `docker ps`
+  - Check that you've restarted Cursor or reloaded MCP connections after adding the configuration
+  - Verify HTTP endpoint is accessible: `curl http://localhost:3333/sse`
+- **Connection errors**: Check container logs with `docker logs mcp-quick-decision`
 
