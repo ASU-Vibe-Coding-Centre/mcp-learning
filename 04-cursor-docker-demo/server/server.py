@@ -5,8 +5,8 @@ This MCP server provides simple decision-making tools for demonstration purposes
 It showcases how MCP servers can extend AI assistants with custom functionality.
 
 Tools:
-- flip_coin: Returns "heads" or "tails" randomly
-- roll_dice: Accepts dice notation (e.g., "1d6", "2d20") and returns results
+- make_decision: Accepts a list of options and randomly selects one (core Quick Decision Maker functionality)
+- random_number: Generates a random number within a specified range (useful for numeric decisions)
 
 This server uses the MCP Python SDK with stdio transport, making it suitable
 for running inside a Docker container and connecting to Cursor IDE.
@@ -14,7 +14,6 @@ for running inside a Docker container and connecting to Cursor IDE.
 
 import asyncio
 import random
-import re
 from typing import Any
 
 from mcp.server import Server
@@ -48,90 +47,53 @@ async def list_tools() -> list[Tool]:
     """
     return [
         Tool(
-            name="flip_coin",
+            name="make_decision",
             description=(
-                "Flip a coin and return either 'heads' or 'tails' randomly. "
-                "No parameters required - just a simple random choice."
-            ),
-            # Empty schema means no parameters are needed
-            inputSchema={
-                "type": "object",
-                "properties": {},
-            },
-        ),
-        Tool(
-            name="roll_dice",
-            description=(
-                "Roll one or more dice using standard dice notation. "
-                "Format: 'NdS' where N is the number of dice and S is the number of sides. "
-                "Examples: '1d6' (one six-sided die), '2d20' (two twenty-sided dice), "
-                "'3d10' (three ten-sided dice). Returns individual rolls and total."
+                "Make a random decision from a list of options. "
+                "Provide a list of options (at least 2) and this tool will randomly select one. "
+                "This is the core functionality of the Quick Decision Maker - perfect for choosing "
+                "between multiple alternatives when you can't decide!"
             ),
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "notation": {
-                        "type": "string",
-                        "description": "Dice notation in NdS format (e.g., '1d6', '2d20')",
+                    "options": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                        },
+                        "description": "List of options to choose from (minimum 2 required)",
+                        "minItems": 2,
                     },
                 },
-                "required": ["notation"],
+                "required": ["options"],
+            },
+        ),
+        Tool(
+            name="random_number",
+            description=(
+                "Generate a random number within a specified range. "
+                "Useful for numeric decisions like 'pick a number between 1 and 100', "
+                "selecting random quantities, or choosing from numbered options."
+            ),
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "min": {
+                        "type": "integer",
+                        "description": "Minimum value (inclusive)",
+                        "default": 1,
+                    },
+                    "max": {
+                        "type": "integer",
+                        "description": "Maximum value (inclusive)",
+                        "default": 100,
+                    },
+                },
+                "required": [],
             },
         ),
     ]
-
-
-def parse_dice_notation(notation: str) -> tuple[int, int]:
-    """Parse dice notation string into number of dice and sides.
-    
-    Dice notation follows the format: NdS
-    - N: Number of dice (must be positive integer)
-    - S: Number of sides per die (must be positive integer)
-    
-    Examples:
-        "1d6" -> (1, 6)  # One six-sided die
-        "2d20" -> (2, 20)  # Two twenty-sided dice
-        "3d10" -> (3, 10)  # Three ten-sided dice
-    
-    Args:
-        notation: Dice notation string in NdS format
-        
-    Returns:
-        Tuple of (number_of_dice, number_of_sides)
-        
-    Raises:
-        ValueError: If notation is invalid or contains invalid numbers
-    """
-    # Use regex to match NdS format where N and S are digits
-    # Pattern explanation:
-    #   ^ - start of string
-    #   (\d+) - one or more digits (captured as number of dice)
-    #   d - literal 'd' character
-    #   (\d+) - one or more digits (captured as number of sides)
-    #   $ - end of string
-    pattern = r"^(\d+)d(\d+)$"
-    match = re.match(pattern, notation.lower().strip())
-    
-    if not match:
-        raise ValueError(
-            f"Invalid dice notation '{notation}'. "
-            "Expected format: NdS (e.g., '1d6', '2d20')"
-        )
-    
-    num_dice = int(match.group(1))
-    num_sides = int(match.group(2))
-    
-    # Validate that numbers are reasonable
-    if num_dice < 1:
-        raise ValueError(f"Number of dice must be at least 1, got {num_dice}")
-    if num_dice > 100:
-        raise ValueError(f"Number of dice cannot exceed 100, got {num_dice}")
-    if num_sides < 2:
-        raise ValueError(f"Number of sides must be at least 2, got {num_sides}")
-    if num_sides > 1000:
-        raise ValueError(f"Number of sides cannot exceed 1000, got {num_sides}")
-    
-    return (num_dice, num_sides)
 
 
 @app.call_tool()
@@ -159,54 +121,80 @@ async def call_tool(name: str, arguments: dict) -> list[TextContent]:
     Raises:
         ValueError: If an unknown tool name is requested or if tool execution fails
     """
-    if name == "flip_coin":
-        # Simple random choice between two outcomes
-        # random.choice selects one item randomly from a sequence
-        result = random.choice(["heads", "tails"])
+    if name == "make_decision":
+        # Extract options list from arguments
+        options = arguments.get("options")
+        
+        if not options:
+            raise ValueError("Missing required parameter: options")
+        
+        if not isinstance(options, list):
+            raise ValueError(f"Options must be a list, got {type(options).__name__}")
+        
+        if len(options) < 2:
+            raise ValueError(f"At least 2 options are required, got {len(options)}")
+        
+        # Filter out empty strings and validate all items are strings
+        valid_options = []
+        for i, option in enumerate(options):
+            if not isinstance(option, str):
+                raise ValueError(f"All options must be strings, but option at index {i} is {type(option).__name__}")
+            if option.strip():  # Skip empty strings
+                valid_options.append(option.strip())
+        
+        if len(valid_options) < 2:
+            raise ValueError("At least 2 non-empty options are required")
+        
+        # Randomly select one option
+        selected = random.choice(valid_options)
+        
+        # Format the output nicely
+        if len(valid_options) == 2:
+            result_text = f"Decision: {selected}"
+        else:
+            # Show all options and the selected one
+            options_list = ", ".join(f'"{opt}"' for opt in valid_options)
+            result_text = f"Options: [{options_list}]\nDecision: {selected}"
+        
         return [
             TextContent(
                 type="text",
-                text=f"The coin landed on: {result}",
+                text=result_text,
             )
         ]
     
-    if name == "roll_dice":
-        # Extract dice notation from arguments
-        notation = arguments.get("notation")
+    if name == "random_number":
+        # Extract min and max from arguments (with defaults)
+        min_val = arguments.get("min", 1)
+        max_val = arguments.get("max", 100)
         
-        if not notation:
-            raise ValueError("Missing required parameter: notation")
+        # Validate types
+        if not isinstance(min_val, int):
+            raise ValueError(f"min must be an integer, got {type(min_val).__name__}")
+        if not isinstance(max_val, int):
+            raise ValueError(f"max must be an integer, got {type(max_val).__name__}")
         
-        if not isinstance(notation, str):
-            raise ValueError(f"Notation must be a string, got {type(notation).__name__}")
+        # Validate range
+        if min_val > max_val:
+            raise ValueError(f"min ({min_val}) cannot be greater than max ({max_val})")
         
-        try:
-            # Parse the dice notation (e.g., "2d20" -> (2, 20))
-            num_dice, num_sides = parse_dice_notation(notation)
-            
-            # Roll each die and collect results
-            rolls = [random.randint(1, num_sides) for _ in range(num_dice)]
-            total = sum(rolls)
-            
-            # Format the output for readability
-            if num_dice == 1:
-                # Single die: just show the result
-                result_text = f"Rolled {notation}: {rolls[0]}"
-            else:
-                # Multiple dice: show individual rolls and total
-                rolls_str = ", ".join(map(str, rolls))
-                result_text = f"Rolled {notation}: [{rolls_str}] = {total}"
-            
-            return [
-                TextContent(
-                    type="text",
-                    text=result_text,
-                )
-            ]
-            
-        except ValueError as e:
-            # Re-raise with clearer error message for the user
-            raise ValueError(f"Error rolling dice: {str(e)}")
+        # Generate random number in range [min, max] (inclusive)
+        result = random.randint(min_val, max_val)
+        
+        # Format the output
+        if min_val == 1 and max_val == 100:
+            # Default case - simple output
+            result_text = f"Random number: {result}"
+        else:
+            # Custom range - show the range
+            result_text = f"Random number between {min_val} and {max_val}: {result}"
+        
+        return [
+            TextContent(
+                type="text",
+                text=result_text,
+            )
+        ]
     
     # If we reach here, an unknown tool was requested
     raise ValueError(f"Unknown tool: {name}")
