@@ -422,10 +422,10 @@ docker build --platform linux/amd64 -t mcp-learning:dev -f docker/Dockerfile .
 
 Once Docker is set up and working:
 
-1. ✅ Verify installation: `docker --version` and `docker-compose --version`
-2. ✅ Build the image: `docker build -t mcp-learning:dev -f docker/Dockerfile .`
-3. ✅ Test the container: `docker-compose -f docker/docker-compose.yml run --rm dev python --version`
-4. 🚀 Continue to [Quick Start Guide](../QUICK_START.md) to build your first MCP server!
+1. Verify installation: `docker --version` and `docker-compose --version`
+2. Build the image: `docker build -t mcp-learning:dev -f docker/Dockerfile .`
+3. Test the container: `docker-compose -f docker/docker-compose.yml run --rm dev python --version`
+4. Continue to [Quick Start Guide](../QUICK_START.md) to build your first MCP server!
 
 ---
 
