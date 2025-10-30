@@ -1,4 +1,6 @@
-# Module 03: Basic MCP Server Implementation
+# Module 04: Basic MCP Server Implementation
+
+> **Advanced Content** - This module contains in-depth, comprehensive material. New to MCP? Start with the [simplified learning path](../../01-introduction-quickstart/) for a beginner-friendly introduction.
 
 Welcome to the practical heart of this learning journey. In this module, you'll build your first Model Context Protocol (MCP) servers from scratch, transforming conceptual knowledge into working code.
 

@@ -1,5 +1,7 @@
 # Module 01: Introduction to Model Context Protocol (MCP)
 
+> **Advanced Content** - This module contains in-depth, comprehensive material. New to MCP? Start with the [simplified learning path](../../01-introduction-quickstart/) for a beginner-friendly introduction.
+
 Welcome to the first module of the MCP learning repository. This module provides a comprehensive introduction to the Model Context Protocol, its architecture, and design principles.
 
 ## Learning Objectives

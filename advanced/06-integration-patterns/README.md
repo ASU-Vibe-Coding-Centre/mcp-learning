@@ -1,4 +1,6 @@
-# Module 05: Integration Patterns
+# Module 06: Integration Patterns
+
+> **Advanced Content** - This module contains in-depth, comprehensive material. New to MCP? Start with the [simplified learning path](../../01-introduction-quickstart/) for a beginner-friendly introduction.
 
 Welcome to real-world MCP integration. In this module, you'll learn how to connect your MCP servers to actual AI applications, debug effectively, and implement production-ready integration patterns.
 

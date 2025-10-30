@@ -1,4 +1,6 @@
-# Module 02.5: Docker MCP Ecosystem
+# Module 03: Docker MCP Ecosystem
+
+> **Advanced Content** - This module contains in-depth, comprehensive material. New to MCP? Start with the [simplified learning path](../../01-introduction-quickstart/) for a beginner-friendly introduction.
 
 Welcome to the Docker MCP Ecosystem module! In this module, you'll learn how to leverage Docker's comprehensive MCP infrastructure to discover, deploy, and manage MCP servers at scale.
 

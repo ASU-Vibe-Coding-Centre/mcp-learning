@@ -1,5 +1,7 @@
 # Module 02: Environment Setup
 
+> **Advanced Content** - This module contains in-depth, comprehensive material. New to MCP? Start with the [simplified learning path](../../01-introduction-quickstart/) for a beginner-friendly introduction.
+
 Welcome to Module 02! In this module, you'll set up everything needed to build and run MCP servers.
 
 ## Learning Objectives
