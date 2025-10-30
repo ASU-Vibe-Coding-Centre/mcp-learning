@@ -90,7 +90,6 @@ ignore = [
 # Pytest configuration
 [tool.pytest.ini_options]
 minversion = "8.0"
-asyncio_mode = "auto"
 testpaths = [
     "01-introduction/examples",
     "02-environment-setup/examples",
