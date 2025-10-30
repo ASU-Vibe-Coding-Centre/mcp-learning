@@ -21,58 +21,54 @@ Verify it's there:
 docker images jestercharles/mcp-quick-decision
 ```
 
-## Step 2: Configure Cursor IDE (2 minutes)
+## Step 2: Run Docker Container (1 minute)
 
-### macOS
+Start the container:
+
+```bash
+docker run -d -p 3333:3333 --name mcp-quick-decision jestercharles/mcp-quick-decision:latest
+```
+
+Verify it's running:
+```bash
+docker ps
+```
+
+## Step 3: Configure Cursor IDE (2 minutes)
+
+### macOS/Linux
 
 Create or edit: `~/.cursor/mcp.json`
-
-```json
-{
-  "mcpServers": {
-    "quick-decision-maker": {
-      "command": "docker",
-      "args": [
-        "run",
-        "--rm",
-        "-i",
-        "jestercharles/mcp-quick-decision:latest"
-      ]
-    }
-  }
-}
-```
 
 ### Windows
 
 Create or edit: `%USERPROFILE%/.cursor/mcp.json`
 
+**Configuration (same for all platforms):**
+
 ```json
 {
   "mcpServers": {
     "quick-decision-maker": {
-      "command": "docker.exe",
-      "args": [
-        "run",
-        "--rm",
-        "-i",
-        "jestercharles/mcp-quick-decision:latest"
-      ]
+      "type": "http",
+      "url": "http://localhost:3333/sse"
     }
   }
 }
 ```
 
-**Important:** Restart Cursor IDE after saving the configuration file.
+**Important:** 
+1. Make sure the Docker container is running before configuring Cursor
+2. Restart Cursor IDE after saving the configuration file
 
-## Step 3: Verify Connection (1 minute)
+## Step 4: Verify Connection (1 minute)
 
 1. Open Cursor IDE
 2. Check MCP panel/settings
 3. Look for "quick-decision-maker" in the list
 4. Server should show as "connected"
 
-## Step 4: Test the Server (2 minutes)
+## Step 5: Test the Server (2 minutes)
 
 Try these prompts in Cursor's chat:
 
@@ -97,12 +93,14 @@ Generate a random number between 50 and 200.
 - Check Docker is running: `docker ps`
 - Verify image exists: `docker images | grep mcp-quick-decision`
 - Try pulling again: `docker pull jestercharles/mcp-quick-decision:latest`
+- Check container logs: `docker logs mcp-quick-decision`
 
 **Cursor can't connect?**
+- Verify the Docker container is running: `docker ps`
+- Check port 3333 is available: `curl http://localhost:3333/sse`
 - Verify configuration file location and name (`mcp.json`)
 - Check JSON syntax is valid (no trailing commas)
 - Restart Cursor IDE completely
-- Check Docker is in your PATH, or use absolute path
 
 **Tools don't work?**
 - Verify server appears in Cursor's MCP panel

@@ -2,9 +2,8 @@
 
 Goal: Extend the simple server with one additional tool.
 
-Suggested ideas:
+Suggested idea:
 - `sum_numbers(numbers: number[]) -> number`
-- `roll_dice_advanced(sides: number = 6, rolls: number = 1, modifier: number = 0)`
 
 Requirements:
 - Add JSON Schema, validation, and type hints

@@ -15,7 +15,13 @@ docker pull jestercharles/mcp-quick-decision:latest
 ### Run the Container
 
 ```bash
-docker run --rm -i jestercharles/mcp-quick-decision:latest
+docker run -d -p 3333:3333 --name mcp-quick-decision jestercharles/mcp-quick-decision:latest
+```
+
+Verify it's running:
+```bash
+docker ps
+docker logs mcp-quick-decision
 ```
 
 ### Connect to Cursor IDE
@@ -28,17 +34,14 @@ docker run --rm -i jestercharles/mcp-quick-decision:latest
 {
   "mcpServers": {
     "quick-decision-maker": {
-      "command": "docker",
-      "args": [
-        "run",
-        "--rm",
-        "-i",
-        "jestercharles/mcp-quick-decision:latest"
-      ]
+      "type": "http",
+      "url": "http://localhost:3333/sse"
     }
   }
 }
 ```
+
+**Important**: Make sure the Docker container is running before connecting Cursor!
 
 3. Restart Cursor IDE
 
@@ -55,7 +58,7 @@ docker run --rm -i jestercharles/mcp-quick-decision:latest
 
 - **Base Image**: Python 3.11-slim
 - **Size**: ~181MB
-- **Transport**: stdio (standard input/output)
+- **Transport**: HTTP with Server-Sent Events (SSE)
 - **Platform**: Linux/amd64
 
 ## Documentation

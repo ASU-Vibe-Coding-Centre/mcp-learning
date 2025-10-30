@@ -1,13 +1,8 @@
 {
   "mcpServers": {
     "quick-decision-maker": {
-      "command": "docker.exe",
-      "args": [
-        "run",
-        "--rm",
-        "-i",
-        "jestercharles/mcp-quick-decision:latest"
-      ]
+      "type": "http",
+      "url": "http://localhost:3333/sse"
     }
   }
 }

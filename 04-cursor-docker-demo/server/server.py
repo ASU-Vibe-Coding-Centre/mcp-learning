@@ -8,17 +8,19 @@ Tools:
 - make_decision: Accepts a list of options and randomly selects one (core Quick Decision Maker functionality)
 - random_number: Generates a random number within a specified range (useful for numeric decisions)
 
-This server uses the MCP Python SDK with stdio transport, making it suitable
+This server uses the MCP Python SDK with HTTP transport, making it suitable
 for running inside a Docker container and connecting to Cursor IDE.
 """
 
 import asyncio
+import os
 import random
 from typing import Any
 
 from mcp.server import Server
-from mcp.server.stdio import stdio_server
+from mcp.server.sse import SseServerTransport
 from mcp.types import Tool, TextContent
+import uvicorn
 
 
 # Create the MCP server instance
@@ -200,41 +202,89 @@ async def call_tool(name: str, arguments: dict) -> list[TextContent]:
     raise ValueError(f"Unknown tool: {name}")
 
 
-async def main() -> None:
-    """Run the MCP server over stdio transport.
+def create_asgi_app():
+    """Create the ASGI application for HTTP transport with SSE."""
+    # Create the transport with SSE (Server-Sent Events) for HTTP
+    # The transport handles requests to the /sse endpoint
+    transport = SseServerTransport("/sse")
     
-    This is the entry point that starts the MCP server. It uses stdio transport,
-    which means the server communicates via standard input/output streams.
+    # Create an ASGI application that routes requests to the transport
+    async def asgi_app(scope, receive, send):
+        """ASGI application handler for HTTP transport."""
+        if scope["type"] == "http":
+            # Check if the request path matches the SSE endpoint
+            path = scope.get("path", "")
+            if path == "/sse" or path.startswith("/sse"):
+                # Route requests to the SSE transport
+                # The transport handles the MCP protocol communication
+                await transport.handle_request(scope, receive, send, app)
+            else:
+                # Return 404 for other paths
+                await send({
+                    "type": "http.response.start",
+                    "status": 404,
+                    "headers": [[b"content-type", b"text/plain"]],
+                })
+                await send({
+                    "type": "http.response.body",
+                    "body": b"Not Found",
+                })
+        else:
+            # For non-HTTP requests, return 404
+            await send({
+                "type": "http.response.start",
+                "status": 404,
+                "headers": [[b"content-type", b"text/plain"]],
+            })
+            await send({
+                "type": "http.response.body",
+                "body": b"Not Found",
+            })
+    
+    return asgi_app
+
+
+async def main() -> None:
+    """Run the MCP server over HTTP transport.
+    
+    This is the entry point that starts the MCP server. It uses HTTP transport
+    with Server-Sent Events (SSE), which means the server communicates over HTTP.
     
     How it works:
-    1. stdio_server() sets up JSON-RPC streams over stdin/stdout
-    2. The Server instance (app) handles routing incoming requests to our handlers
-    3. The server runs until it receives a shutdown signal
+    1. The server starts an HTTP server (uvicorn) on a specified port (default: 3333)
+    2. Cursor IDE connects via HTTP URL (e.g., http://localhost:3333/sse)
+    3. The Server instance (app) handles routing incoming requests to our handlers
+    4. The server runs until it receives a shutdown signal
     
     When running in Docker:
-    - Docker connects its stdin/stdout to the container's stdin/stdout
-    - Cursor IDE connects to Docker's stdin/stdout
-    - This creates a communication bridge: Cursor <-> Docker <-> MCP Server
+    - Docker exposes a port (e.g., 3333) and maps it to the host
+    - Cursor IDE connects to http://localhost:3333/sse
+    - This creates a communication bridge: Cursor <-> HTTP <-> Docker Container <-> MCP Server
     
     The server will continue running until:
-    - The client sends a shutdown request
+    - The process receives SIGTERM/SIGINT
     - The container is stopped
-    - An error occurs that causes the connection to close
+    - An error occurs that causes the server to crash
     """
-    # stdio_server provides JSON-RPC streams over stdin/stdout
-    # This is the communication channel that MCP clients use to send requests
-    async with stdio_server() as (read_stream, write_stream):
-        # app.run handles initialization and routes incoming requests to our handlers
-        # It automatically:
-        # - Parses JSON-RPC messages from the read stream
-        # - Routes tool calls to call_tool()
-        # - Routes tool discovery to list_tools()
-        # - Sends responses back through the write stream
-        await app.run(read_stream, write_stream, app.create_initialization_options())
+    port = int(os.getenv("PORT", "3333"))
+    host = os.getenv("HOST", "0.0.0.0")
+    
+    # Create the ASGI application
+    asgi_app = create_asgi_app()
+    
+    # Run the server with uvicorn
+    config = uvicorn.Config(
+        app=asgi_app,
+        host=host,
+        port=port,
+        log_level="info",
+    )
+    server = uvicorn.Server(config)
+    await server.serve()
 
 
 if __name__ == "__main__":
     # Run the async main function using asyncio
-    # This starts the server and keeps it running
+    # This starts the HTTP server and keeps it running
     asyncio.run(main())
 

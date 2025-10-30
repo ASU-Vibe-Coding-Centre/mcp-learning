@@ -71,7 +71,7 @@ Cursor IDE ←→ Docker Container ←→ MCP Server
 
 1. **MCP Server**: A program that provides tools to AI assistants
 2. **Docker Container**: Packages the server for easy deployment
-3. **stdio Transport**: Communication via standard input/output (no network ports needed)
+3. **HTTP Transport**: Communication over HTTP with Server-Sent Events (SSE) on port 3333
 4. **Tool Discovery**: Cursor automatically discovers available tools when connected
 
 ### Visual Aids (Optional)
@@ -105,12 +105,15 @@ We have two options for getting the server running:
    docker images jestercharles/mcp-quick-decision
    ```
 
-3. **Test run (optional, for verification):**
+3. **Run the container (required for HTTP transport):**
    ```bash
-   docker run --rm -i jestercharles/mcp-quick-decision:latest
+   docker run -d -p 3333:3333 --name mcp-quick-decision jestercharles/mcp-quick-decision:latest
    ```
-   - The container should start and wait for input
-   - Press Ctrl+C to stop
+   - The `-d` flag runs the container in the background
+   - The `-p 3333:3333` flag maps port 3333 from container to host
+   - The container will run the HTTP server on port 3333
+   - Verify it's running: `docker ps`
+   - Stop it later: `docker stop mcp-quick-decision`
 
 **Student Steps:**
 
@@ -148,7 +151,8 @@ If you prefer to build from source:
 - The Docker image packages everything needed to run the server
 - No need to install Python or dependencies on your machine
 - The server runs in isolation inside the container
-- We use `-i` flag for interactive mode (required for stdio transport)
+- We expose port 3333 and map it to the host for HTTP communication
+- The server uses HTTP transport with SSE (Server-Sent Events)
 
 **Transition**: "Now that we have the server ready, let's connect it to Cursor IDE..."
 
@@ -184,76 +188,63 @@ your-workspace/.cursor/mcp.json
 
 ### Configuration Content
 
-**macOS Configuration:**
+**macOS/Windows/Linux Configuration:**
 
-Open or create `~/.cursor/mcp.json` and add:
+Open or create `~/.cursor/mcp.json` (macOS/Linux) or `%USERPROFILE%/.cursor/mcp.json` (Windows) and add:
 
 ```json
 {
   "mcpServers": {
     "quick-decision-maker": {
-      "command": "docker",
-      "args": [
-        "run",
-        "--rm",
-        "-i",
-        "jestercharles/mcp-quick-decision:latest"
-      ]
+      "type": "http",
+      "url": "http://localhost:3333/sse"
     }
   }
 }
 ```
 
-**Windows Configuration:**
+**Important**: Make sure the Docker container is running before connecting Cursor!
 
-Same structure, but use `docker.exe` if needed:
-
-```json
-{
-  "mcpServers": {
-    "quick-decision-maker": {
-      "command": "docker.exe",
-      "args": [
-        "run",
-        "--rm",
-        "-i",
-        "jestercharles/mcp-quick-decision:latest"
-      ]
-    }
-  }
-}
+```bash
+docker run -d -p 3333:3333 --name mcp-quick-decision jestercharles/mcp-quick-decision:latest
 ```
 
 ### Step-by-Step Instructions
 
-1. **Locate or create the configuration file:**
+1. **Start the Docker container (if not already running):**
+   ```bash
+   docker run -d -p 3333:3333 --name mcp-quick-decision jestercharles/mcp-quick-decision:latest
+   ```
+   - Verify it's running: `docker ps`
+   - Check logs if needed: `docker logs mcp-quick-decision`
+
+2. **Locate or create the configuration file:**
    - Check if `~/.cursor/` directory exists (create if needed)
    - Create `mcp.json` if it doesn't exist
    - If file exists, open it and add to existing `mcpServers` object
 
-2. **Add the server configuration:**
+3. **Add the server configuration:**
    - Copy the JSON configuration above
    - Ensure proper JSON formatting (commas, brackets)
    - Save the file
 
-3. **Restart Cursor IDE:**
+4. **Restart Cursor IDE:**
    - Close Cursor completely
    - Reopen Cursor IDE
    - This is required for Cursor to load the new MCP configuration
 
-4. **Verify Connection:**
+5. **Verify Connection:**
    - Open Cursor's MCP panel (check settings or extensions menu)
    - Look for "quick-decision-maker" in the list of MCP servers
    - Server should show as "connected" or show available tools
 
 ### Configuration Explained
 
-- **`command`**: The Docker executable (`docker` or `docker.exe`)
-- **`args`**: Arguments passed to Docker:
-  - `run`: Start a new container
-  - `--rm`: Remove container when it stops (cleanup)
-  - `-i`: Interactive mode (required for stdio transport)
-  - `image-name:tag`: The Docker image to run
+- **`type`**: Transport type, set to `"http"` for HTTP transport
+- **`url`**: HTTP URL where the MCP server is running
+  - Format: `http://localhost:3333/sse`
+  - The `/sse` endpoint is the Server-Sent Events endpoint for MCP communication
+  - Port `3333` must match the port where Docker container is exposed
 
 ### Troubleshooting: Configuration Issues
 
@@ -262,14 +253,19 @@ Same structure, but use `docker.exe` if needed:
 - **Solution**: Check JSON syntax is valid (use a JSON validator)
 - **Solution**: Verify Docker is in your PATH or use absolute path
 
-**Issue**: "docker: command not found"
-- **Solution (macOS)**: Use `/usr/local/bin/docker` as absolute path
-- **Solution (Windows)**: Use `C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe` or ensure Docker is in PATH
-- **Solution**: Test Docker works: `docker --version` in terminal
+**Issue**: Container not running
+- **Solution**: Start the container: `docker run -d -p 3333:3333 --name mcp-quick-decision jestercharles/mcp-quick-decision:latest`
+- **Solution**: Check container status: `docker ps`
+- **Solution**: Check container logs: `docker logs mcp-quick-decision` in terminal
 
 **Issue**: JSON syntax error
 - **Solution**: Validate JSON format (no trailing commas, proper quotes)
 - **Solution**: Use the example configuration from `config/cursor-settings-macos.json` or `config/cursor-settings-windows.json`
+
+**Issue**: Port already in use
+- **Solution**: Check if another container is using port 3333: `docker ps`
+- **Solution**: Use a different port: `docker run -d -p 3334:3333 --name mcp-quick-decision jestercharles/mcp-quick-decision:latest`
+- **Solution**: Update Cursor config to use the new port: `"url": "http://localhost:3334/sse"`
 
 **Transition**: "Great! Now that Cursor is connected, let's test the server with some example prompts..."
 
@@ -404,7 +400,7 @@ Encourage questions about:
 **Key Concepts:**
 - **MCP Server**: Provides tools to AI assistants
 - **Docker Packaging**: Makes servers easy to deploy
-- **stdio Transport**: Simple communication without network ports
+- **HTTP Transport**: Communication over HTTP on port 3333 with SSE
 - **Tool Discovery**: Cursor automatically finds available tools
 
 **Architecture Recap:**
@@ -460,12 +456,13 @@ Common questions:
 
 #### Issue: Container Won't Start
 
-**Symptom**: Docker command fails or container exits immediately
+**Symptom**: Container exits immediately or port 3333 is not accessible
 
 **Possible Causes:**
 1. Docker not running
 2. Image not found
-3. Incorrect image name
+3. Port 3333 already in use
+4. Container crashed
 
 **Solutions:**
 ```bash
@@ -477,6 +474,16 @@ docker images | grep mcp-quick-decision
 
 # Try pulling image again
 docker pull jestercharles/mcp-quick-decision:latest
+
+# Check container logs
+docker logs mcp-quick-decision
+
+# Check if port 3333 is in use
+lsof -i :3333  # macOS/Linux
+netstat -ano | findstr :3333  # Windows
+
+# Restart container
+docker run -d -p 3333:3333 --name mcp-quick-decision jestercharles/mcp-quick-decision:latest
 ```
 
 #### Issue: Cursor Can't Connect to Server
@@ -503,40 +510,32 @@ docker pull jestercharles/mcp-quick-decision:latest
 1. Container stopped
 2. Invalid parameters sent to tool
 3. Server error
+4. HTTP connection issue
 
 **Solutions:**
 1. Check if container is running: `docker ps`
-2. Verify tool parameters match the schema
-3. Check container logs: `docker logs <container-id>`
+2. Verify HTTP endpoint is accessible: `curl http://localhost:3333/sse`
+3. Check container logs: `docker logs mcp-quick-decision`
+4. Verify tool parameters match the schema
+5. Restart the container if needed
 
 #### Issue: Wrong Docker Path (Windows/macOS)
 
 **Symptom**: "docker: command not found" error
 
-**Solution - macOS:**
-Use absolute path in configuration:
-```json
-{
-  "mcpServers": {
-    "quick-decision-maker": {
-      "command": "/usr/local/bin/docker",
-      "args": ["run", "--rm", "-i", "jestercharles/mcp-quick-decision:latest"]
-    }
-  }
-}
-```
+**Solution:**
+Verify the container is running and the port is mapped correctly:
+```bash
+# Check if container is running
+docker ps
 
-**Solution - Windows:**
-Use absolute path or ensure Docker is in PATH:
-```json
-{
-  "mcpServers": {
-    "quick-decision-maker": {
-      "command": "C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe",
-      "args": ["run", "--rm", "-i", "jestercharles/mcp-quick-decision:latest"]
-    }
-  }
-}
+# Check if port 3333 is listening
+curl http://localhost:3333/sse
+
+# Restart the container if needed
+docker stop mcp-quick-decision
+docker rm mcp-quick-decision
+docker run -d -p 3333:3333 --name mcp-quick-decision jestercharles/mcp-quick-decision:latest
 ```
 
 #### Issue: JSON Configuration Syntax Error

@@ -7,6 +7,20 @@ This directory contains example Cursor IDE MCP configuration files for the Quick
 - `cursor-settings-macos.json` - macOS configuration example
 - `cursor-settings-windows.json` - Windows configuration example
 
+## HTTP Transport Configuration
+
+**Important**: The Quick Decision Maker server uses **HTTP transport with Server-Sent Events (SSE)**. This means:
+
+1. The Docker container runs the HTTP server on port 3333
+2. Cursor IDE connects to the server via HTTP URL: `http://localhost:3333/sse`
+3. The MCP server inside the container provides the tools over HTTP
+4. You need to run the Docker container manually before connecting Cursor
+
+**Before connecting Cursor:**
+1. Start the Docker container: `docker run -d -p 3333:3333 jestercharles/mcp-quick-decision:latest`
+2. Verify the server is running: `curl http://localhost:3333/sse` (should connect)
+3. Configure Cursor to connect to `http://localhost:3333/sse`
+
 ## JSON Structure
 
 The configuration uses the `mcpServers` object format:
@@ -15,8 +29,8 @@ The configuration uses the `mcpServers` object format:
 {
   "mcpServers": {
     "server-name": {
-      "command": "docker",
-      "args": ["run", "--rm", "-i", "image-name:tag"]
+      "type": "http",
+      "url": "http://localhost:3333/sse"
     }
   }
 }
@@ -26,12 +40,8 @@ The configuration uses the `mcpServers` object format:
 
 - **`mcpServers`**: Top-level object containing all MCP server configurations
 - **`server-name`**: Unique identifier for this server (e.g., "quick-decision-maker")
-- **`command`**: The executable to run (e.g., "docker" or "docker.exe" on Windows)
-- **`args`**: Array of command-line arguments
-  - `run`: Docker run command
-  - `--rm`: Automatically remove container when it stops
-  - `-i`: Interactive mode (required for stdio transport)
-  - `image-name:tag`: Docker image to run (e.g., "jestercharles/mcp-quick-decision:latest")
+- **`type`**: Transport type, set to `"http"` for HTTP transport
+- **`url`**: HTTP URL where the MCP server is running (e.g., "http://localhost:3333/sse")
 
 ## Platform Differences
 
@@ -52,31 +62,19 @@ The configuration uses the `mcpServers` object format:
 
 If you need to use an absolute path instead of relying on PATH:
 
-**macOS:**
+**macOS/Windows/Linux:**
 ```json
 {
   "mcpServers": {
     "quick-decision-maker": {
-      "command": "/usr/local/bin/docker",
-      "args": ["run", "--rm", "-i", "jestercharles/mcp-quick-decision:latest"]
+      "type": "http",
+      "url": "http://localhost:3333/sse"
     }
   }
 }
 ```
 
-**Windows:**
-```json
-{
-  "mcpServers": {
-    "quick-decision-maker": {
-      "command": "C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe",
-      "args": ["run", "--rm", "-i", "jestercharles/mcp-quick-decision:latest"]
-    }
-  }
-}
-```
-
-Note: On Windows, use double backslashes (`\\`) in JSON paths.
+**Note**: The configuration is the same on all platforms since we're using HTTP transport. Just make sure the Docker container is running with the port mapped.
 
 ## Configuration Placement
 
