@@ -1,0 +1,102 @@
+version: '3.8'
+
+services:
+  # Main development environment for building and testing MCP servers
+  dev:
+    # Build from Dockerfile in the docker/ directory
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    
+    # Container name for easy reference
+    container_name: mcp-learning-dev
+    
+    # Mount the project directory as a volume for live code editing
+    # Changes made on host are immediately reflected in container
+    volumes:
+      - ..:/app
+      # Named volume for Python packages to improve performance
+      - pip-cache:/home/mcpuser/.cache/pip
+    
+    # Keep container running for interactive development
+    # Override with specific commands when running servers
+    stdin_open: true
+    tty: true
+    
+    # Expose port 3000 for MCP server
+    # Map to host port 3000 for accessing server from host machine
+    ports:
+      - "3000:3000"
+    
+    # Environment variables for development
+    environment:
+      # Enable Python development mode for better error messages
+      - PYTHONDEVELOPMENT=1
+      # Set timezone (adjust as needed)
+      - TZ=UTC
+    
+    # Restart policy: don't restart automatically
+    # For development, manual control is preferred
+    restart: "no"
+    
+    # Default command: bash shell for interactive development
+    command: /bin/bash
+
+  # Test runner service for running automated tests
+  test:
+    # Use the same Dockerfile as dev
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    
+    container_name: mcp-learning-test
+    
+    # Mount project directory
+    volumes:
+      - ..:/app
+      - pip-cache:/home/mcpuser/.cache/pip
+    
+    # Environment for testing
+    environment:
+      - PYTHONDEVELOPMENT=1
+      - TZ=UTC
+    
+    # Run pytest by default
+    # Override with specific test paths as needed
+    command: pytest -v
+    
+    # Don't restart test container
+    restart: "no"
+
+  # Service for running a specific MCP server example
+  # This is a template - duplicate and modify for different servers
+  example-server:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    
+    container_name: mcp-example-server
+    
+    volumes:
+      - ..:/app
+      - pip-cache:/home/mcpuser/.cache/pip
+    
+    ports:
+      - "3000:3000"
+    
+    environment:
+      - PYTHONDEVELOPMENT=1
+      - TZ=UTC
+    
+    # Override this command to run specific example servers
+    # Example: python 03-basic-mcp-server/examples/minimal_server.py
+    command: /bin/bash
+    
+    restart: "no"
+
+# Named volumes for caching
+volumes:
+  # Persistent pip cache to speed up dependency installation
+  pip-cache:
+    driver: local
+
