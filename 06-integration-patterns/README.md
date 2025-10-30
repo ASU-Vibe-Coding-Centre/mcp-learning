@@ -1167,7 +1167,7 @@ The `exercises/` directory contains hands-on practice:
 
 ### Tutorials
 
-1. **tutorial-1-claude-integration.md** - Connect server to Cursor IDE
+1. **tutorial-1-cursor-integration.md** - Connect server to Cursor IDE
    - Estimated time: 30 minutes
    - Difficulty: Beginner
    - Configure and test your first integration
