@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "quick-decision-maker": {
+      "command": "docker.exe",
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "jestercharles/mcp-quick-decision:latest"
+      ]
+    }
+  }
+}
+
