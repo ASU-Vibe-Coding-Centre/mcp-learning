@@ -144,6 +144,8 @@ mcp-server/
 - **[mcp.so](https://mcp.so)** - Discover free MCP servers
 - **[Docker MCP Catalog](https://hub.docker.com/u/mcp)** - 200+ pre-built servers
 - **[NetworkChuck's Docker MCP Tutorial](https://github.com/theNetworkChuck/docker-mcp-tutorial)** - Additional Docker examples
+- **[S-tier Dev MCP Servers](https://youtu.be/5az_4IwTwAE?si=UCT9-0-cHe_0jawR)**
+- **[9 MCP Servers Vibe Coders](https://youtu.be/2wYO6sdQ9xc?si=Wa2RBKBlAMxxLzXY)**
 
 ## Ready for More?
 
